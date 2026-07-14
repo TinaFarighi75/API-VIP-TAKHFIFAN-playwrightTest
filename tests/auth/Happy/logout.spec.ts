@@ -1,7 +1,7 @@
 import { test, expect } from "../../../utils/auth/auth-fixtures";
 import { users } from "../../../test-data/user-data";
 
-test("log out @smoke @auth @auth-admin @regression", async ({ authApi, authTokenAdmin, authUUIDAdmin }) => {
+test("log out admin @smoke @auth @auth-admin @regression", async ({ authApi, authTokenAdmin, authUUIDAdmin }) => {
 
   const userTest = users[0];
 
@@ -16,7 +16,7 @@ test("log out @smoke @auth @auth-admin @regression", async ({ authApi, authToken
   expect(response.msg).toEqual("Deleted successfully")
 });
 
-test("log out @smoke @auth @auth-merchant @regression", async ({ authApi, authTokeMerchant, authUUIDMerchant }) => {
+test("log out merchant @smoke @auth @auth-merchant @regression", async ({ authApi, authTokeMerchant, authUUIDMerchant }) => {
 
   const userTest = users[2];
 

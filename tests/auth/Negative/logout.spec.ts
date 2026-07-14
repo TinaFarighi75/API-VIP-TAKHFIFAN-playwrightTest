@@ -64,4 +64,12 @@ test.describe("logout validation @auth @negative-auth @negative", () => {
     const response = await authApi.getInvalidResponse400();
     expect(response.msg).toBe("اطلاعاتی پیدا نشد");
   })
+  test("when vpn is on",async({authApi,authTokenAdmin,authUUIDAdmin})=>{
+    await authApi.logoutRequest(authTokenAdmin,authUUIDAdmin)
+    const status= await authApi.getStatus()
+    expect(status).toBe(403)
+    const response= await authApi.getInvalidResponse403()
+    expect(response.error).toBe("")
+    expect(response.message).toBe("")
+  })
 });

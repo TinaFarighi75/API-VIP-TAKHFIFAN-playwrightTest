@@ -85,6 +85,8 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(403);
     const response = await authApi.getInvalidResponse403();
+    expect(response.error).toBe("")
+    expect(response.message).toBe("")
   });
 
   test("login with wrong email format", async ({ authApi }) => {

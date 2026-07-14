@@ -3,7 +3,7 @@ import { users } from "../../../test-data/user-data";
 
 test("log out admin @smoke @auth @auth-admin @regression", async ({ authApi, authTokenAdmin, authUUIDAdmin }) => {
 
-  const userTest = users[0];
+
 
   await authApi.logoutRequest(authTokenAdmin, authUUIDAdmin);
 
@@ -18,7 +18,7 @@ test("log out admin @smoke @auth @auth-admin @regression", async ({ authApi, aut
 
 test("log out merchant @smoke @auth @auth-merchant @regression", async ({ authApi, authTokeMerchant, authUUIDMerchant }) => {
 
-  const userTest = users[2];
+ 
 
   await authApi.logoutRequest(authTokeMerchant,authUUIDMerchant );
 

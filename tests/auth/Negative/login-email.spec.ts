@@ -12,7 +12,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(400);
 
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
 
     expect(response).toHaveProperty("msg");
     expect(typeof response.msg).toBe("string");
@@ -27,7 +27,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(400);
 
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
 
     expect(response).toHaveProperty("msg");
     expect(typeof response.msg).toBe("string");
@@ -42,7 +42,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(400);
 
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
 
     expect(response).toHaveProperty("msg");
     expect(typeof response.msg).toBe("string");
@@ -57,7 +57,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(400);
 
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
 
     expect(response).toHaveProperty("msg");
     expect(typeof response.msg).toBe("string");
@@ -70,7 +70,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     const status = await authApi.getStatus();
     expect(status).toBe(400);
 
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
 
     expect(response).toHaveProperty("msg");
     expect(typeof response.msg).toBe("string");
@@ -84,14 +84,14 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
 
     const status = await authApi.getStatus();
     expect(status).toBe(403);
-    const response = await authApi.getInvalidResponsePermissionDeniedLogIn();
+    const response = await authApi.getInvalidResponse403();
   });
 
   test("login with wrong email format", async ({ authApi }) => {
     await authApi.loginRequest("tinagmail.com", "11111");
     const status = await authApi.getStatus();
     expect(status).toBe(400);
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
     expect(response.msg).toEqual("ایمیل یا رمز عبور اشتباه است");
   });
   test("login with incorrect password", async ({ authApi }) => {
@@ -100,7 +100,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     await authApi.loginRequest(userTest.email, "1514545454655");
     const status = await authApi.getStatus();
     expect(status).toBe(400);
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
     expect(response.msg).toEqual("ایمیل یا رمز عبور اشتباه است");
   });
   test("log in with user and password who not register yet", async ({
@@ -110,7 +110,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     await authApi.loginRequest(userTest.email, userTest.passwordTest);
     const status = await authApi.getStatus();
     expect(status).toBe(400);
-    const response = await authApi.getInvalidResponseByInvalidData();
+    const response = await authApi.getInvalidResponse400();
     expect(response.msg).toEqual("ایمیل یا رمز عبور اشتباه است");
   });
   test.fixme("login with wrong url", async ({ authApi }) => {
@@ -122,7 +122,7 @@ test.describe("login by email validation @auth @negative-auth @negative", () => 
     );
     const status = await authApi.getStatus();
     expect(status).toBe(404);
-    const response = await authApi.getInvalidResponseNotFoundLogIn()
+    const response = await authApi.getInvalidResponse404()
     expect(response.message).toBe("Not found")
   });
 });

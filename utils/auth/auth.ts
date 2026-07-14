@@ -1,26 +1,16 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import type {
   ValidLoginResponse,
-  InvalidResponsenNotLogIn,
-  InvalidResponsePermissionDeniedLogIn,
-  InvalidResponseNotFoundLogIn,
   ValidLogOutResponse,
-  InValidLogOutResponse,
   ValidLogInResponseViaOtp,
-  InValidLogInResponseNotloggedInViaOtp,
-  InValidLogInResponsePermissionDeniedViaOtp,
-  InValidLogInResponseNotFoundViaOtp,
-  InValidLogInResponseResponseStatusIs400ViaOtp,
   ValidCheckOtp,
-  InvalidCheckOtpErrorResponseStatusIs400,
-  InvalidCheckOtpPermissionDenied,
-  InvalidCheckOtpNoFound,
-  InvalidCheckNotLoggedIn,
   ValidRegisterUser,
-  InvalidRegisterUserError400,
-  InvalidRegisterUserError500,
   OverThanLimit,
-  InvalidResponseByInvalidData,
+  InvalidResponse401,
+  InvalidResponse403,
+  InvalidResponse404,
+  InvalidResponse400,
+  // InvalidResponse500,
 } from "./auth-type";
 
 export class Auth {
@@ -89,51 +79,6 @@ export class Auth {
     };
   }
 
-  async getInvalidResponsenNotLogIn(): Promise<InvalidResponsenNotLogIn> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-    };
-  }
-  async getInvalidResponsePermissionDeniedLogIn(): Promise<InvalidResponsePermissionDeniedLogIn> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-      message: responseJson.message,
-    };
-  }
-  async getInvalidResponseNotFoundLogIn(): Promise<InvalidResponseNotFoundLogIn> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      message: responseJson.message,
-    };
-  }
-
-  async getInvalidResponseByInvalidData(): Promise<InvalidResponseByInvalidData> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-
-    return {
-      msg: responseJson.msg,
-    };
-  }
   //------------------LOGOUT---------------------------
 
   async logoutRequest(token: string, uuid: string, url?: string) {
@@ -151,18 +96,6 @@ export class Auth {
   }
 
   async getValidLogOutResponse(): Promise<ValidLogOutResponse> {
-    if (!this.response) {
-      throw new Error("No response found. Call logoutRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      msg: responseJson.msg,
-    };
-  }
-
-  async getInValidLogOutResponse(): Promise<InValidLogOutResponse> {
     if (!this.response) {
       throw new Error("No response found. Call logoutRequest first.");
     }
@@ -195,43 +128,6 @@ export class Auth {
     const responseJson = await this.response.json();
     return {
       otp_token: responseJson.otp_token,
-    };
-  }
-  async getInValidLogInResponseNotloggedInViaOtp(): Promise<InValidLogInResponseNotloggedInViaOtp> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-    return {
-      error: responseJson.error,
-    };
-  }
-  async getInValidLogInResponsePermissionDeniedViaOtp(): Promise<InValidLogInResponsePermissionDeniedViaOtp> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-    return {
-      error: responseJson.error,
-      message: responseJson.message,
-    };
-  }
-  async getInValidLogInResponseNotFoundViaOtp(): Promise<InValidLogInResponseNotFoundViaOtp> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-    return {
-      message: responseJson.message,
-    };
-  }
-  async getInValidLogInResponseResponseStatusIs400ViaOtp(): Promise<InValidLogInResponseResponseStatusIs400ViaOtp> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-    return {
-      msg: responseJson.msg,
     };
   }
 
@@ -287,54 +183,6 @@ export class Auth {
       sub_businesses: responseJson.sub_businesses,
     };
   }
-
-  async getInvalidCheckOtpErrorResponseStatusIs400(): Promise<InvalidCheckOtpErrorResponseStatusIs400> {
-    if (!this.response) {
-      throw new Error("No response found. Call checkOtpRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      msg: responseJson.msg,
-    };
-  }
-
-  async getInvalidCheckOtpPermissionDenied(): Promise<InvalidCheckOtpPermissionDenied> {
-    if (!this.response) {
-      throw new Error("No response found. Call checkOtpRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-      message: responseJson.message,
-    };
-  }
-  async getInvalidCheckOtpNoFound(): Promise<InvalidCheckOtpNoFound> {
-    if (!this.response) {
-      throw new Error("No response found. Call checkOtpRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      message: responseJson.message,
-    };
-  }
-  async getInvalidCheckNotLoggedIn(): Promise<InvalidCheckNotLoggedIn> {
-    if (!this.response) {
-      throw new Error("No response found. Call checkOtpRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-    };
-  }
-
   //------------------REGISTER---------------------------
   async loginRegisterUserRequest(
     mobile: string,
@@ -366,30 +214,6 @@ export class Auth {
     };
   }
 
-  async getInvalidRegisterUserError400(): Promise<InvalidRegisterUserError400> {
-    if (!this.response) {
-      throw new Error(
-        "No response found. Call the request method  as true first.",
-      );
-    }
-    const responseJson = await this.response.json();
-    return {
-      message: responseJson.message,
-    };
-  }
-  async getInvalidRegisterUserError500(): Promise<InvalidRegisterUserError500> {
-    if (!this.response) {
-      throw new Error(
-        "No response found. Call the request method  as true first.",
-      );
-    }
-    const responseJson = await this.response.json();
-    return {
-      message: responseJson.message,
-      error_class_name: responseJson.error_class_name,
-    };
-  }
-
   //------------------GENERAL-------------------------
 
   async getOverThanLimit(): Promise<OverThanLimit> {
@@ -403,6 +227,7 @@ export class Auth {
       message: responseJson.message,
     };
   }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   async getStatus(): Promise<number> {
     if (!this.response) {
@@ -410,5 +235,53 @@ export class Auth {
     }
 
     return this.response.status();
+  }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  async getInvalidResponse401(): Promise<InvalidResponse401> {
+    if (!this.response) {
+      throw new Error("No response found. Call loginRequest first.");
+    }
+
+    const responseJson = await this.response.json();
+
+    return {
+      error: responseJson.error,
+    };
+  }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  async getInvalidResponse403(): Promise<InvalidResponse403> {
+    if (!this.response) {
+      throw new Error("No response found. Call loginRequest first.");
+    }
+
+    const responseJson = await this.response.json();
+
+    return {
+      error: responseJson.error,
+      message: responseJson.message,
+    };
+  }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  async getInvalidResponse404(): Promise<InvalidResponse404> {
+    if (!this.response) {
+      throw new Error("No response found. Call loginRequest first.");
+    }
+
+    const responseJson = await this.response.json();
+
+    return {
+      message: responseJson.message,
+    };
+  }
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  async getInvalidResponse400(): Promise<InvalidResponse400> {
+    if (!this.response) {
+      throw new Error("No response found. Call loginRequest first.");
+    }
+    const responseJson = await this.response.json();
+
+    return {
+      msg: responseJson.msg,
+    };
   }
 }

@@ -21,8 +21,8 @@ export type ValidLoginResponse = {
   };
   business: {
     id: number | null;
-    v3_id:  number | null;
-    name:string
+    v3_id: number | null;
+    name: string;
   };
   sub_businesses: Array<{
     id: number;
@@ -74,7 +74,6 @@ export type ValidRegisterUser = {
   otp_token: string;
 };
 
-
 //------------------GENERAL---------------------------
 
 export type OverThanLimit = {
@@ -83,23 +82,19 @@ export type OverThanLimit = {
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export type InvalidResponse400 = {
-  msg:string
-
-}
+  msg: string;
+};
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export type InvalidResponse404 = {
-  message:string
-
-}
+  message: string;
+};
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export type InvalidResponse403 = {
-  error:string
-  message:string
-
-}
+  error: string;
+  message: string;
+};
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export type InvalidResponse401 = {
-  error:string
-
-}
+  error: string;
+};

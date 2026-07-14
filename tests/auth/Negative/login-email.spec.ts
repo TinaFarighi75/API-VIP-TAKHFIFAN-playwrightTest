@@ -1,6 +1,6 @@
 import { test, expect } from "../../../utils/auth/auth-fixtures";
 import { users } from "../../../test-data/user-data";
-import { request } from "node:http";
+
 
 test.describe("login by email validation @auth @negative-auth @negative", () => {
 

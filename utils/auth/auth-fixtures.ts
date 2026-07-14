@@ -5,7 +5,7 @@ import { Auth } from "../auth/auth";
 type MyFixtures = {
   authApi: Auth;
   authTokenAdmin: string;
-  authTokeMerchant :string
+  authTokeMerchant: string;
   authUUIDAdmin: string;
   authUUIDMerchant: string;
   authloginRequestViaOtp: string;
@@ -28,13 +28,13 @@ export const test = base.extend<MyFixtures>({
     const loginData = await authApi.getValidLoginResponselogin();
     await use(loginData.uuid);
   },
-    authTokeMerchant: async ({ authApi }, use) => {
+  authTokeMerchant: async ({ authApi }, use) => {
     const defaultUser = users[2];
     await authApi.loginRequest(defaultUser.username, defaultUser.password);
     const loginData = await authApi.getValidLoginResponselogin();
     await use(loginData.token);
   },
-    authUUIDMerchant: async ({ authApi }, use) => {
+  authUUIDMerchant: async ({ authApi }, use) => {
     const defaultUser = users[2];
     await authApi.loginRequest(defaultUser.username, defaultUser.password);
     const loginData = await authApi.getValidLoginResponselogin();

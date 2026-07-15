@@ -13,7 +13,7 @@ test("check otp @smoke @auth @auth-merchant @regression ", async ({ authApi,auth
    
   expect(status).toBe(200)
 
-   const createdAt = new Date(response.created_at).getTime();
+  const createdAt = new Date(response.created_at).getTime();
   const expireAt = new Date(response.expires_at).getTime();
 
   expect(response.uuid.length).toBeGreaterThan(0);
@@ -50,7 +50,5 @@ test("check otp @smoke @auth @auth-merchant @regression ", async ({ authApi,auth
 
   expect(typeof response.login_url).toBe("string");
   expect(response.login_url).toContain("/panel/redirect/?");
-  
-
 
 });

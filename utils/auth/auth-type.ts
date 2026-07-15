@@ -77,7 +77,7 @@ export type ValidRegisterUser = {
 //------------------GENERAL---------------------------
 
 export type OverThanLimit = {
-  message: string;
+  msg: string;
 };
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

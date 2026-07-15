@@ -224,7 +224,7 @@ export class Auth {
     const responseJson = await this.response.json();
 
     return {
-      message: responseJson.message,
+       msg: responseJson.msg,
     };
   }
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

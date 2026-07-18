@@ -1,66 +1,100 @@
+//helper/auth-limit-helper.ts
+
 import { Auth } from "../utils/auth/auth";
 import { OverThanLimit } from "../utils/auth/auth-type";
 
-export async function hitLoginLogoutUntilExpectedLimit(
+function extractMessage(body: any): string | undefined {
+  return body?.msg || body?.message || body?.error?.msg;
+}
+
+export async function hitCheckOtpUntilExpectedLimit(
   authApi: Auth,
-  email: string,
-  password: string,
-  token: string,
-  uuid: string,
+  otpToken: string,
+  wrongCode: string,
   expectedMsg: string,
-  maxTry = 6
-): Promise<OverThanLimit> {
-  for (let i = 0; i < maxTry; i++) {
-    await authApi.loginRequest(email, password);
+  maxAttempts = 300
+) {
+  let lastBody: any = null;
 
-    const loginLimitedResult = await authApi.getOverThanLimit().catch(() => null);
-    if (loginLimitedResult?.msg === expectedMsg) {
-      return loginLimitedResult;
-    }
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const response = await authApi.loginCheckOtpRequest(otpToken, wrongCode);
+    const status = response.status();
+    const body = await response.json().catch(() => null);
+    const msg = extractMessage(body);
 
-    await authApi.logoutRequest(token, uuid);
+    lastBody = body;
 
-    const logoutLimitedResult = await authApi.getOverThanLimit().catch(() => null);
-    if (logoutLimitedResult?.msg === expectedMsg) {
-      return logoutLimitedResult;
+    console.log(
+      `[${new Date().toISOString()}] check_otp attempt ${attempt}, status: ${status}, msg: ${msg}`
+    );
+
+    if (msg === expectedMsg) {
+      return body;
     }
   }
 
-  throw new Error("Expected over-than-limit response was not returned.");
+  throw new Error(
+    `Expected over-than-limit response was not returned after ${maxAttempts} attempts. Last body: ${JSON.stringify(
+      lastBody
+    )}`
+  );
 }
 
-export async function expectLimitedLogin(
+export async function expectLimitedCheckOtp(
   authApi: Auth,
-  email: string,
-  password: string,
+  otpToken: string,
+  wrongCode: string,
   expectedMsg: string
 ): Promise<OverThanLimit> {
-  await authApi.loginRequest(email, password);
+  const startedAt = Date.now();
 
-  const result = await authApi.getOverThanLimit();
-  const status = await authApi.getStatus();
+  const response = await authApi.loginCheckOtpRequest(otpToken, wrongCode);
+  const status = response.status();
+  const body = await response.json().catch(() => null);
+  const msg = extractMessage(body);
+
+  console.log(
+    `[${new Date().toISOString()}] expectLimitedCheckOtp, duration: ${
+      Date.now() - startedAt
+    }ms, status: ${status}, msg: ${msg}`
+  );
 
   if (status !== 400) {
-    throw new Error(`Expected status 400 but got ${status}`);
+    throw new Error(
+      `Expected status 400 but got ${status}. Body: ${JSON.stringify(body)}`
+    );
   }
 
-  if (result.msg !== expectedMsg) {
-    throw new Error(`Expected msg "${expectedMsg}" but got "${result.msg}"`);
+  if (msg !== expectedMsg) {
+    throw new Error(
+      `Expected msg "${expectedMsg}" but got "${msg}". Body: ${JSON.stringify(body)}`
+    );
   }
 
-  return result;
+  return body as OverThanLimit;
 }
 
-export async function expectSuccessfulLogin(
+export async function expectNotLimitedCheckOtp(
   authApi: Auth,
-  email: string,
-  password: string
+  otpToken: string,
+  wrongCode: string,
+  expectedMsg: string
 ): Promise<void> {
-  await authApi.loginRequest(email, password);
+  const response = await authApi.loginCheckOtpRequest(otpToken, wrongCode);
+  const status = response.status();
+  const body = await response.json().catch(() => null);
+  const msg = extractMessage(body);
 
-  const status = await authApi.getStatus();
-  if (status !== 200) {
-    throw new Error(`Expected status 200 but got ${status}`);
+  console.log(
+    `[${new Date().toISOString()}] expectNotLimitedCheckOtp, status: ${status}, msg: ${msg}`
+  );
+
+  if (msg === expectedMsg) {
+    throw new Error(
+      `Expected user not to be limited, but over-than-limit response was returned. Body: ${JSON.stringify(
+        body
+      )}`
+    );
   }
 }
 

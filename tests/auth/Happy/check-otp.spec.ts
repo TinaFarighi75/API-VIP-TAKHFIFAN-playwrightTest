@@ -1,3 +1,5 @@
+//tests/auth/happy/check-otp.spec.ts
+
 import { test, expect } from "../../../utils/auth/auth-fixtures";
 import { users } from "../../../test-data/user-data";
 

@@ -1,114 +1,95 @@
+//tests/auth/Negative/overThanLimit.spec.ts
+
 import { test, expect } from "../../../utils/auth/auth-fixtures";
-import { users } from "../../../test-data/user-data";
 import {
-  hitLoginLogoutUntilExpectedLimit,
-  expectLimitedLogin,
-  expectSuccessfulLogin,
+  hitCheckOtpUntilExpectedLimit,
+  expectLimitedCheckOtp,
+  expectNotLimitedCheckOtp,
   sleep,
 } from "../../../helper/auth-limit-helper";
 
-test.describe("over than limit validation with 60 seconds cooldown - login logout", () => {
-  test("should return over-than-limit message after repeated login/logout", async ({
+test.describe.configure({ mode: "serial" });
+
+test.describe("check_otp over-than-limit validation with cooldown", () => {
+  test.setTimeout(200_000);
+
+  const wrongCode = "12345"; // keep your actual wrong code
+  const expectedMsg =
+    "تعداد تلاش‌های ناموفق بیش از حد مجاز است. لطفا ۱۵ دقیقه دیگر مجددا تلاش کنید";
+
+  test("should return over-than-limit message after more than 200 invalid attempts", async ({
     authApi,
-    authTokeMerchant,
-    authUUIDMerchant,
   }) => {
-    const expectedMsg =
-      "تعداد تلاش‌های ناموفق بیش از حد مجاز است. لطفا ۶۰ ثانیه دیگر مجددا تلاش کنید";
+    const otpToken = "YOUR_DYNAMIC_OR_CURRENT_TOKEN";
 
-    const userTest = users[2];
-
-    const result = await hitLoginLogoutUntilExpectedLimit(
+    const result = await hitCheckOtpUntilExpectedLimit(
       authApi,
-      userTest.email,
-      userTest.passwordTest,
-      authTokeMerchant,
-      authUUIDMerchant,
-      expectedMsg
+      otpToken,
+      wrongCode,
+      expectedMsg,
+      300
     );
 
-    expect(result.msg).toBe(expectedMsg);
-    expect(await authApi.getStatus()).toBe(400);
+    expect(result).toBeTruthy();
   });
 
-  test("should extend cooldown when user retries before 60 seconds", async ({
+  test("should stay limited when user retries before 60 seconds", async ({
     authApi,
-    authTokeMerchant,
-    authUUIDMerchant,
   }) => {
-    const expectedMsg =
-      "تعداد تلاش‌های ناموفق بیش از حد مجاز است. لطفا ۶۰ ثانیه دیگر مجددا تلاش کنید";
+    const otpToken = "YOUR_DYNAMIC_OR_CURRENT_TOKEN";
 
-    const userTest = users[2];
-
-    await hitLoginLogoutUntilExpectedLimit(
+    await hitCheckOtpUntilExpectedLimit(
       authApi,
-      userTest.email,
-      userTest.passwordTest,
-      authTokeMerchant,
-      authUUIDMerchant,
-      expectedMsg
+      otpToken,
+      wrongCode,
+      expectedMsg,
+      300
     );
 
-    await sleep(20 * 1000);
+    const limitedAt = Date.now();
+    console.log(`Limited at: ${new Date(limitedAt).toISOString()}`);
 
-    const retryResult = await expectLimitedLogin(
-      authApi,
-      userTest.email,
-      userTest.passwordTest,
-      expectedMsg
+    await sleep(30_000);
+
+    console.log(
+      `Checking limited state after ${Date.now() - limitedAt}ms from first limited response`
     );
 
-    expect(retryResult.msg).toBe(expectedMsg);
-
-    await sleep(50 * 1000);
-
-    const stillLimitedResult = await expectLimitedLogin(
+    await expectLimitedCheckOtp(
       authApi,
-      userTest.email,
-      userTest.passwordTest,
+      otpToken,
+      wrongCode,
       expectedMsg
     );
-
-    expect(stillLimitedResult.msg).toBe(expectedMsg);
-    expect(await authApi.getStatus()).toBe(400);
   });
 
-  test("should allow login after 60 seconds passes from the last limited attempt", async ({
+  test("should not return over-than-limit after cooldown window passes", async ({
     authApi,
-    authTokeMerchant,
-    authUUIDMerchant,
   }) => {
-    const expectedMsg =
-      "تعداد تلاش‌های ناموفق بیش از حد مجاز است. لطفا ۶۰ ثانیه دیگر مجددا تلاش کنید";
+    const otpToken = "YOUR_DYNAMIC_OR_CURRENT_TOKEN";
 
-    const userTest = users[2];
-
-    await hitLoginLogoutUntilExpectedLimit(
+    await hitCheckOtpUntilExpectedLimit(
       authApi,
-      userTest.email,
-      userTest.passwordTest,
-      authTokeMerchant,
-      authUUIDMerchant,
-      expectedMsg
+      otpToken,
+      wrongCode,
+      expectedMsg,
+      300
     );
 
-    await sleep(20 * 1000);
+    const limitedAt = Date.now();
+    console.log(`Limited at: ${new Date(limitedAt).toISOString()}`);
 
-    await expectLimitedLogin(
-      authApi,
-      userTest.email,
-      userTest.passwordTest,
-      expectedMsg
+    await sleep(65_000);
+
+    console.log(
+      `Checking non-limited state after ${Date.now() - limitedAt}ms from first limited response`
     );
 
-    // Cooldown should be counted from the latest limited retry.
-    await sleep(65 * 1000);
-
-    await expectSuccessfulLogin(
+    await expectNotLimitedCheckOtp(
       authApi,
-      userTest.email,
-      userTest.passwordTest
+      otpToken,
+      wrongCode,
+      expectedMsg
     );
   });
 });

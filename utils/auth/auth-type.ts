@@ -1,3 +1,6 @@
+
+//utils/auth/auth-type.ts
+
 //------------------LOGIN---------------------------
 
 export type ValidLoginResponse = {

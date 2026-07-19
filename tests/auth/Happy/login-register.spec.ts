@@ -4,7 +4,7 @@ import { test, expect } from "../../../utils/fixtures";
 
 import { fakerFA as faker } from "@faker-js/faker";
 
-test("check user is new to join takhfifan vip @smoke @auth @register @regression", async ({authApi,}) => {
+test("check user is new to join takhfifan vip @smoke @auth @register @regression", async ({authApi}) => {
   const mobile = "09" + faker.string.numeric(9);
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();

@@ -1,7 +1,7 @@
 //tests/auth/Negative/login-via-otp.spec.ts
 
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test.describe("login via otp validation @auth @negative-auth @negative", () => {

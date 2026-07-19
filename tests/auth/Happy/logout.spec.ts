@@ -1,6 +1,6 @@
 //tests/auth/happy/logout.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test("log out admin @smoke @auth @auth-admin @regression", async ({ authApi, authTokenAdmin, authUUIDAdmin }) => {

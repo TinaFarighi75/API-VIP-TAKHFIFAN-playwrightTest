@@ -1,8 +1,10 @@
 //utils/auth/auth-fixtures.ts
 
 import { test as base } from "@playwright/test";
-import { users } from "../../test-data/user-data";
-import { Auth } from "../auth/auth";
+import { users } from "../test-data/user-data"; 
+
+import { Auth } from "./auth/auth";
+import { Vendor } from "./create vendor/createVendor";
 
 type MyFixtures = {
   authApi: Auth;
@@ -11,11 +13,15 @@ type MyFixtures = {
   authUUIDAdmin: string;
   authUUIDMerchant: string;
   authloginRequestViaOtp: string;
+  vendorApi: Vendor;
 };
 export const test = base.extend<MyFixtures>({
   authApi: async ({ request }, use) => {
-    const auth = new Auth(request);
-    await use(auth);
+    await use(new Auth(request));
+  },
+
+  vendorApi: async ({ request }, use) => {
+    await use(new Vendor(request));
   },
 
   authTokenAdmin: async ({ authApi }, use) => {

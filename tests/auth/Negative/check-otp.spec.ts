@@ -1,6 +1,6 @@
 //tests/auth/Negative/check-otp.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test.describe("check OTP validation @auth @negative-auth @negative", async () => {

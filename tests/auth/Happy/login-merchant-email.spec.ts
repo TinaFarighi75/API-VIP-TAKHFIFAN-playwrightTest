@@ -1,6 +1,6 @@
 //tests/auth/happy/login-merchant-email.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test("login by email and valid data-MERCHANT @smoke @auth @auth-merchant @regression", async ({ authApi }) => {

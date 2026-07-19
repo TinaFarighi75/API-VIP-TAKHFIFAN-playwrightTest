@@ -1,6 +1,6 @@
 //tests/auth/happy/login-register.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 
 import { fakerFA as faker } from "@faker-js/faker";
 

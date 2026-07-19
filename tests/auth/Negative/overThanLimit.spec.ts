@@ -1,6 +1,6 @@
 //tests/auth/Negative/overThanLimit.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import {
   hitCheckOtpUntilExpectedLimit,
   expectLimitedCheckOtp,

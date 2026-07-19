@@ -1,7 +1,7 @@
 //tests/auth/Negative/logout.spec.ts
 
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test.describe("logout validation @auth @negative-auth @negative", () => {

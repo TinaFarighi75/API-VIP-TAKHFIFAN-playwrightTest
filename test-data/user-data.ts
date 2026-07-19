@@ -13,6 +13,7 @@ export type TestUser = {
   vendorId: number | null;
   businessName: string | null;
 };
+
 export const users: TestUser[] = [
   {
     id: 1,

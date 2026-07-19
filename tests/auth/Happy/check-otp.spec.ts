@@ -1,6 +1,6 @@
 //tests/auth/happy/check-otp.spec.ts
 
-import { test, expect } from "../../../utils/auth/auth-fixtures";
+import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test("check otp @smoke @auth @auth-merchant @regression ", async ({ authApi,authloginRequestViaOtp}) => {

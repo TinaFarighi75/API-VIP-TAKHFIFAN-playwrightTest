@@ -30,7 +30,7 @@ test("check mobile number is assign to vendor @smoke @vendor @vendor-merchant @r
   const status = await authApi.getStatus();
   expect(status).toBe(200);
 
-  const response = await vendorApi.getsearchBusinessSearchMobileNumberIsNewResponse();
+  const response = await vendorApi.getsearchBusinessSearchMobileNumberIsNotNewResponse();
 
   expect(response.current_page).toBe(1);
   expect(response.per_page).toBe(30);

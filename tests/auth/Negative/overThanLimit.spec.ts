@@ -10,7 +10,7 @@ import {
 
 test.describe.configure({ mode: "serial" });
 
-test.describe("check_otp over-than-limit validation with cooldown", () => {
+test.describe("check_otp over-than-limit validation with cooldown  @auth @negative-auth @negative @overThanLimit", () => {
   test.setTimeout(200_000);
 
   const wrongCode = "12345"; // keep your actual wrong code

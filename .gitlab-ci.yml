@@ -1,0 +1,22 @@
+image: docker:20.10.23
+
+before_script:
+  - mkdir -p $HOME/.docker
+  - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+
+stages:
+  - build
+
+variables:
+  APP_NAME: vip-automation-test
+  IMAGE: repository.takhfifan.local:5003/$APP_NAME:$CI_COMMIT_REF_SLUG
+
+build:
+  stage: build
+  script:
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
+  except:
+    - main
+  tags:
+    - ir-runner

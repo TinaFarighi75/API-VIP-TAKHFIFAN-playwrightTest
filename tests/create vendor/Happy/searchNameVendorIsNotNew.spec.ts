@@ -36,7 +36,6 @@ test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant 
   expect(response.per_page).toBe(30);
   expect(response.total_entries).toBe(1);
   expect(response.data).toHaveLength(1);
-
   expect(response.data[0]).toMatchObject({
     id: String(userTest.businessId),
     type: "business",
@@ -45,4 +44,4 @@ test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant 
       v3_id: userTest.vendorId,
     },
   });
-});
+})

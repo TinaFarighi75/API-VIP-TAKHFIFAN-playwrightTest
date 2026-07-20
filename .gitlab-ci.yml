@@ -16,7 +16,5 @@ build:
   script:
     - docker build -t $IMAGE .
     - docker push $IMAGE
-  except:
-    - main
   tags:
     - ir-runner

@@ -1,6 +1,8 @@
 import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data.js";
+
 test.describe("search mobile bussines validation  @vendor @negative-vendor @negative", async () => {
+    
   test.fixme("Send by wrong mobile type", async ({
     authApi,
     authTokenAdmin,

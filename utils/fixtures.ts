@@ -5,6 +5,7 @@ import { users } from "../test-data/user-data";
 
 import { Auth } from "./auth/auth";
 import { Business } from "./business/business";
+import{Category} from "./category/category";
 
 type MyFixtures = {
   authApi: Auth;
@@ -14,6 +15,7 @@ type MyFixtures = {
   authUUIDMerchant: string;
   authloginRequestViaOtp: string;
   businessApi: Business;
+  categoryApi:Category;
 };
 export const test = base.extend<MyFixtures>({
   authApi: async ({ request }, use) => {
@@ -23,7 +25,10 @@ export const test = base.extend<MyFixtures>({
   businessApi: async ({ request }, use) => {
     await use(new Business(request));
   },
-
+  categoryApi: async ({ request }, use) => {
+    await use(new Category(request));
+  },
+  
   authTokenAdmin: async ({ authApi }, use) => {
     const defaultUser = users[0];
     await authApi.loginRequest(defaultUser.username, defaultUser.password);

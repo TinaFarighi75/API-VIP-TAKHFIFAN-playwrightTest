@@ -1,6 +1,6 @@
 import { test, expect } from "../../../utils/fixtures.js";
 
-test("check category list @smoke @category @category-merchant @regression @vendor", async ({
+test("check category list @smoke @category @category-merchant @regression", async ({
   authApi,
   categoryApi,
   authTokenAdmin,
@@ -103,4 +103,54 @@ test("check category list @smoke @category @category-merchant @regression @vendo
     v3_category_id: 546,
     commission: null,
   });
+    const  beautyAndCosmeticsCategory = response.data.find(
+    (item) => item.id === "492",
+  );
+  expect(beautyAndCosmeticsCategory.id).toBe("492");
+  expect(beautyAndCosmeticsCategory.type).toBe("category");
+  expect(beautyAndCosmeticsCategory.attributes.v3_category_id).toEqual(548);
+  expect(beautyAndCosmeticsCategory.attributes.name).toEqual(
+    "زیبایی و آرایشی",
+  );
+  expect(beautyAndCosmeticsCategory.attributes.is_active).toBe(true);
+  expect(beautyAndCosmeticsCategory.attributes.level).toEqual(3);
+  expect(beautyAndCosmeticsCategory.attributes.commission).toEqual(20.0);
+  expect(beautyAndCosmeticsCategory.attributes.minimum_commission).toBe(null);
+  expect(beautyAndCosmeticsCategory.attributes.profitability).toBe(null);
+  expect(beautyAndCosmeticsCategory.attributes.listing_fee).toBe(null);
+  expect(beautyAndCosmeticsCategory.attributes.pos_min_commission).toEqual(7);
+  expect(beautyAndCosmeticsCategory.attributes.pos_max_commission).toEqual(20);
+  expect(
+    beautyAndCosmeticsCategory.attributes.recommended_pos_commission,
+  ).toEqual(15);
+  expect(beautyAndCosmeticsCategory.attributes.business_line).toBe(null);
+  expect(beautyAndCosmeticsCategory.attributes.description).toContain("لوازم و محصولات آرایشی و بهداشتی")
+  expect(beautyAndCosmeticsCategory.attributes.default_cover_file).toBeDefined();
+  expect(
+    beautyAndCosmeticsCategory.attributes.default_logo_file,
+  ).toBeDefined();
+  expect(
+    beautyAndCosmeticsCategory.attributes.default_cover_type,
+  ).toBeDefined();
+  expect(beautyAndCosmeticsCategory.attributes.slug).toBe(
+    "beauty-cosmetics",
+  );
+  expect(
+    beautyAndCosmeticsCategory.attributes.default_cover_file_url,
+  ).toBeDefined();
+  expect(
+    beautyAndCosmeticsCategory.attributes.default_logo_file_url,
+  ).toBeDefined();
+  expect(beautyAndCosmeticsCategory.attributes.default_cover_file).toContain("/uploads/magento_media/category/staging/category/default_cover_file)")
+  expect(beautyAndCosmeticsCategory.attributes.default_logo_file).toContain("/uploads/magento_media/category/staging/category/default_logo_file)")
+  expect(beautyAndCosmeticsCategory.attributes.default_cover_file_url).toBeDefined();
+  expect(beautyAndCosmeticsCategory.attributes.default_cover_file_url).toContain("https://cdn.takhfifan.com/media/category/staging/category/default_cover_file")
+    expect(beautyAndCosmeticsCategory.attributes.default_logo_file_url).toContain("https://cdn.takhfifan.com/media/category/staging/category/default_logo_file")
+
+  expect(beautyAndCosmeticsCategory.attributes.parent).toMatchObject({
+    id: 498,
+    name: "newcategory",
+    v3_category_id: 546,
+    commission: null,
+  });   
 });

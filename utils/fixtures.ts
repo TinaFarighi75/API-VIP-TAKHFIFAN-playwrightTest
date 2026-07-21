@@ -4,7 +4,7 @@ import { test as base } from "@playwright/test";
 import { users } from "../test-data/user-data"; 
 
 import { Auth } from "./auth/auth";
-import { Vendor } from "./create vendor/createVendor";
+import { Business } from "./business/business";
 
 type MyFixtures = {
   authApi: Auth;
@@ -13,15 +13,15 @@ type MyFixtures = {
   authUUIDAdmin: string;
   authUUIDMerchant: string;
   authloginRequestViaOtp: string;
-  vendorApi: Vendor;
+  businessApi: Business;
 };
 export const test = base.extend<MyFixtures>({
   authApi: async ({ request }, use) => {
     await use(new Auth(request));
   },
 
-  vendorApi: async ({ request }, use) => {
-    await use(new Vendor(request));
+  businessApi: async ({ request }, use) => {
+    await use(new Business(request));
   },
 
   authTokenAdmin: async ({ authApi }, use) => {

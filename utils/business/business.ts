@@ -6,9 +6,9 @@ import type {
   InvalidResponse404,
   InvalidResponse400,
 } from "../auth/auth-type";
-import type { ValidSearchResponseToCheckNewMobileNumberOrNot } from "../create vendor/createVendor-type";
+import type { ValidSearchResponseToCheckNewMobileNumberOrNot } from "../business/business-type";
 
-export class Vendor {
+export class Business {
   private request: APIRequestContext;
   private baseUrl: string = "https://stgiran-vip.takhfifan.com/api/v1";
   private response?: APIResponse;

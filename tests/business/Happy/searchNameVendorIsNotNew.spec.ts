@@ -3,12 +3,12 @@ import { users } from "../../../test-data/user-data.js";
 
 test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant @regression", async ({
   authApi,
-  vendorApi,
+  businessApi,
   authTokenAdmin,
 }) => {
   const userTest = users[4];
 
-  await vendorApi.searchBusinessNameIsNewVendorOrNotRequest(
+  await businessApi.searchBusinessNameIsNewVendorOrNotRequest(
     authTokenAdmin,
     undefined,
     undefined,
@@ -30,7 +30,7 @@ test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant 
   const status = await authApi.getStatus();
   expect(status).toBe(200);
 
-  const response = await vendorApi.getsearchBusinessNameIsNotNewVendorResponse();
+  const response = await businessApi.getsearchBusinessNameIsNotNewVendorResponse();
 
   expect(response.current_page).toBe(1);
   expect(response.per_page).toBe(30);

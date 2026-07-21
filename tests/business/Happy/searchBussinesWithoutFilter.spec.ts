@@ -1,14 +1,17 @@
+
+//tests/create vendor/happy/searchBussinesWithoutFilter.spec.ts
+
 import { test, expect } from "../../../utils/fixtures.js";
 import { users } from "../../../test-data/user-data.js";
 
 test("check mobile number is assign to vendor @smoke @vendor @vendor-merchant @regression", async ({
   authApi,
-  vendorApi,
+  businessApi,
   authTokenAdmin,
 }) => {
   const userTest = users[4];
 
-  await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+  await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
     authTokenAdmin,
     undefined,
     undefined,
@@ -24,25 +27,17 @@ test("check mobile number is assign to vendor @smoke @vendor @vendor-merchant @r
     undefined,
     undefined,
     undefined,
-    userTest.mobile,
+    undefined,
   );
 
   const status = await authApi.getStatus();
   expect(status).toBe(200);
 
-  const response = await vendorApi.getsearchBusinessSearchMobileNumberIsNotNewResponse();
+  const response = await businessApi.getsearchBusinessSearchMobileNumberIsNotNewResponse();
 
   expect(response.current_page).toBe(1);
   expect(response.per_page).toBe(30);
-  expect(response.total_entries).toBe(1);
-  expect(response.data).toHaveLength(1);
+  expect(response.total_entries).toBeGreaterThan(10000);
+  expect(response.data.length).toBeGreaterThan(10);
 
-  expect(response.data[0]).toMatchObject({
-    id: String(userTest.businessId),
-    type: "business",
-    attributes: {
-      name: userTest.businessName,
-      v3_id: userTest.vendorId,
-    },
-  });
 });

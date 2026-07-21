@@ -7,9 +7,9 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
   test.fixme("Send by wrong mobile type", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
-    await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+    await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
       authTokenAdmin,
       undefined,
       undefined,
@@ -37,9 +37,9 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
   test.fixme("Send by wrong mobile length", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
-    await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+    await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
       authTokenAdmin,
       undefined,
       undefined,
@@ -67,10 +67,10 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
   test.fixme("Send without auth token", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
     const userTest = users[4];
-    await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+    await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
       undefined,
       undefined,
       undefined,
@@ -98,10 +98,10 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
   test.fixme("Send by wrong url", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
     const userTest = users[4];
-    await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+    await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
       authTokenAdmin,
       undefined,
       undefined,
@@ -131,10 +131,10 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
 test.describe("search bussines name validation  @vendor @negative-vendor @negative", async () => {
   test.fixme("Send without auth token", async ({
     authApi,
-    vendorApi,
+    businessApi,
   }) => {
     const userTest = users[4];
-    await vendorApi.searchBusinessNameIsNewVendorOrNotRequest(
+    await businessApi.searchBusinessNameIsNewVendorOrNotRequest(
       undefined,
       undefined,
       undefined,
@@ -162,9 +162,9 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
     test.fixme("Sending with a very long name", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
-    await vendorApi.searchBusinessNameIsNewVendorOrNotRequest(
+    await businessApi.searchBusinessNameIsNewVendorOrNotRequest(
       authTokenAdmin,
       undefined,
       undefined,
@@ -191,9 +191,9 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
       test.fixme("Send by only space name", async ({
     authApi,
     authTokenAdmin,
-    vendorApi,
+    businessApi,
   }) => {
-    await vendorApi.searchBusinessNameIsNewVendorOrNotRequest(
+    await businessApi.searchBusinessNameIsNewVendorOrNotRequest(
       authTokenAdmin,
       undefined,
       undefined,

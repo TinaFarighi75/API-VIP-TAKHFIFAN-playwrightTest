@@ -3,19 +3,17 @@ import { fakerFA as faker } from "@faker-js/faker";
 
 test("check mobile number is not assign to another vendor @smoke @vendor @vendor-merchant @regression", async ({
   authApi,
-  vendorApi,
+  businessApi,
   authTokenAdmin,
 }) => {
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const fullName = `${firstName} ${lastName}`;
-  await vendorApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
+  const mobile = "09" + faker.string.numeric(9);
+
+  await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
     authTokenAdmin,
     undefined,
     undefined,
     undefined,
     undefined,
-    fullName,
     undefined,
     undefined,
     undefined,
@@ -26,12 +24,13 @@ test("check mobile number is not assign to another vendor @smoke @vendor @vendor
     undefined,
     undefined,
     undefined,
+    mobile,
   );
-
+ console.log(mobile)
   const status = await authApi.getStatus();
   expect(status).toBe(200);
   const response =
-    await vendorApi.getsearchBusinessSearchMobileNumberIsNewResponse();
+    await businessApi.getsearchBusinessSearchMobileNumberIsNewResponse();
   expect(response.data).toEqual([]);
   expect(response.current_page).toBe(1);
   expect(response.per_page).toBe(30);

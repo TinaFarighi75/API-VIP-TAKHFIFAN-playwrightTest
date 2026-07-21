@@ -86,3 +86,147 @@ export type ValidSearchResponseToCheckNewMobileNumberOrNot = {
     };
   }>;
 };
+
+//------------------CHAIN STORE---------------------------
+
+
+export type ChainStoreResponse = {
+  data: Array<{
+    id: string;
+    type: "chain_store";
+    attributes: {
+      id: number;
+      name: string;
+      en_name: string | null;
+      v3_id: number | null;
+      is_active: boolean | null;
+      category_id: number | null;
+      description: string | null;
+      wallets: Array<{
+        wallet_name: string;
+        wallet_name_fa: string;
+        is_active: boolean;
+      }>;
+      logos: string[];
+      images: string[];
+    };
+  }>;
+};
+
+
+//------------------CASH REGISTER---------------------------
+
+export type cashRegisterResponse = Array<{
+  id: number;
+  title: string;
+}>;
+
+//------------------CATEGORY LIST---------------------------
+
+export type CategoryListResponse = {
+  data: Array<{
+    id: string;
+    type: "category";
+    attributes: {
+      v3_category_id: number;
+      name: string;
+      commission: number;
+      minimum_commission: number | null;
+      profitability: number | null;
+      is_active: boolean;
+      listing_fee: number | null;
+      pos_min_commission: number;
+      pos_max_commission: number;
+      recommended_pos_commission: number;
+      business_line: string | null;
+      description: string;
+      default_cover_file: string;
+      default_logo_file: string;
+      default_cover_type: string;
+      slug: string;
+      level: number;
+      default_cover_file_url: string;
+      default_logo_file_url: string;
+      children: unknown | null; 
+      parent: {
+        id: number;
+        name: string;
+        v3_category_id: number;
+        commission: number | null;
+      };
+    };
+  }>;
+};
+
+//------------------MENU RESPONSE---------------------------
+
+
+export type MenuResponse = {
+  data: Array<{
+    id: string;
+    type: "menu";
+    attributes: {
+      id: number;
+      parent_id: number | null;
+      title: string;
+      url: string;
+      icon: string;
+      order: number;
+      roles: Array<{
+        id: number;
+        name: string;
+        created_at: string;
+        updated_at: string;
+      }>;
+      is_core: boolean | null;
+      is_tdc: boolean | null;
+      is_offcb: boolean | null;
+      children: Array<{
+        id: string;
+        type: "menu";
+        attributes: {
+          id: number;
+          parent_id: number | null;
+          title: string;
+          url: string;
+          icon: string;
+          order: number;
+          roles: Array<{
+            id: number;
+            name: string;
+            created_at: string;
+            updated_at: string;
+          }>;
+          is_core: boolean | null;
+          is_tdc: boolean | null;
+          is_offcb: boolean | null;
+          children: unknown[];
+        };
+      }>;
+    };
+  }>;
+};
+
+//------------------LOCATIONS RESPONSE---------------------------
+
+
+export type LocationsResponse = {
+  locations: Array<{
+    id: number;
+    name: string;
+    parent_id: number;
+    type_location: string;
+    v3_id: number;
+    section: string | null;
+    sort_order: number | null;
+    path: string;
+    slug: string;
+    description: string | null;
+    latitude: string;
+    longitude: string;
+    dms_latitude: string;
+    dms_longitude: string;
+    is_shown: boolean;
+  }>;
+};
+

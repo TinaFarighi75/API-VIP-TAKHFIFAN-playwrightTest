@@ -7,6 +7,7 @@ import { Auth } from "./auth/auth";
 import { Business } from "./business/business";
 import{Category} from "./category/category";
 import { Location } from "./location/location";
+import{TakhfifanPayment} from "./takhfifan_payment/takhfifan_payment";
 
 type MyFixtures = {
   authApi: Auth;
@@ -18,6 +19,7 @@ type MyFixtures = {
   businessApi: Business;
   categoryApi:Category;
   locationApi:Location;
+  takhfifanPaymentApi:TakhfifanPayment;
 };
 export const test = base.extend<MyFixtures>({
   authApi: async ({ request }, use) => {
@@ -32,6 +34,9 @@ export const test = base.extend<MyFixtures>({
   },
   locationApi: async ({ request }, use) => {
     await use(new Location(request));
+  },
+  takhfifanPaymentApi: async ({ request }, use) => {
+    await use(new TakhfifanPayment(request));
   },
   authTokenAdmin: async ({ authApi }, use) => {
     const defaultUser = users[0];

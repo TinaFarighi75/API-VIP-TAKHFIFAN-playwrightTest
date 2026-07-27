@@ -1,4 +1,4 @@
-import { test, expect } from "../../../utils/fixtures";
+import { test, expect } from "../../../../utils/fixtures";
 import { fakerFA as faker } from "@faker-js/faker";
 
 test("check mobile number is not assign to another vendor @smoke @vendor @vendor-merchant @regression", async ({
@@ -6,16 +6,14 @@ test("check mobile number is not assign to another vendor @smoke @vendor @vendor
   businessApi,
   authTokenAdmin,
 }) => {
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const fullName = `${firstName} ${lastName}`;
+  const mobile = "09" + faker.string.numeric(9);
+
   await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
     authTokenAdmin,
     undefined,
     undefined,
     undefined,
     undefined,
-    fullName,
     undefined,
     undefined,
     undefined,
@@ -26,8 +24,9 @@ test("check mobile number is not assign to another vendor @smoke @vendor @vendor
     undefined,
     undefined,
     undefined,
+    mobile,
   );
-
+ console.log(mobile)
   const status = await authApi.getStatus();
   expect(status).toBe(200);
   const response =

@@ -1,5 +1,5 @@
-import { test, expect } from "../../../utils/fixtures.js";
-import { users } from "../../../test-data/user-data.js";
+import { test, expect } from "../../../../utils/fixtures";
+import { users } from "../../../../test-data/user-data.js";
 
 test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant @regression", async ({
   authApi,

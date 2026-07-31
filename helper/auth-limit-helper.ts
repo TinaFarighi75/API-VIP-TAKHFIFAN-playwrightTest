@@ -1,7 +1,7 @@
 //helper/auth-limit-helper.ts
 
 import { Auth } from "../utils/auth/auth";
-import { OverThanLimit } from "../utils/auth/auth-type";
+import { OverThanLimit } from "../utils/Base/base.type";
 
 function extractMessage(body: any): string | undefined {
   return body?.msg || body?.message || body?.error?.msg;

@@ -1,15 +1,13 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import type { TakhfifanPaymentResponse } from "./takhfifan_payment-type";
+import { BaseApi } from "../Base/base";
 
 
-export class TakhfifanPayment {
-  private request: APIRequestContext;
+export class TakhfifanPayment  extends BaseApi{
+
   private baseUrl = "https://stgiran-vip.takhfifan.com/api/v1";
-  private response?: APIResponse;
 
-  constructor(request: APIRequestContext) {
-    this.request = request;
-  }
+
 
   //------------------TAKHFIFAN PAYMENT---------------------------
 

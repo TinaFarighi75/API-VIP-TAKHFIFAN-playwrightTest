@@ -5,13 +5,13 @@ test.describe("check takhfifan payment  happy senario validation @takhfifan-paym
     takhfifanPaymentApi,
     authTokenAdmin,
   }) => {
-    const apiResponse = await takhfifanPaymentApi.takhfifanPaymentRequest(
+    await takhfifanPaymentApi.takhfifanPaymentRequest(
       authTokenAdmin,
       100000,
       100776,
     );
-
-    expect(apiResponse.status()).toBe(200);
+    const status = await takhfifanPaymentApi.getStatus();
+    expect(status).toBe(200);
 
     const response = await takhfifanPaymentApi.getTakhfifanPaymentResponse();
 
@@ -30,13 +30,13 @@ test.describe("check takhfifan payment  happy senario validation @takhfifan-paym
     takhfifanPaymentApi,
     authTokenAdmin,
   }) => {
-    const apiResponse = await takhfifanPaymentApi.takhfifanPaymentRequest(
+    await takhfifanPaymentApi.takhfifanPaymentRequest(
       authTokenAdmin,
       1000000000,
       100776,
     );
-
-    expect(apiResponse.status()).toBe(200);
+    const status = await takhfifanPaymentApi.getStatus();
+    expect(status).toBe(200);
 
     const response = await takhfifanPaymentApi.getTakhfifanPaymentResponse();
 
@@ -55,13 +55,14 @@ test.describe("check takhfifan payment  happy senario validation @takhfifan-paym
     takhfifanPaymentApi,
     authTokenAdmin,
   }) => {
-    const apiResponse = await takhfifanPaymentApi.takhfifanPaymentRequest(
+    await takhfifanPaymentApi.takhfifanPaymentRequest(
       authTokenAdmin,
       200000,
       100776,
     );
 
-    expect(apiResponse.status()).toBe(200);
+    const status = await takhfifanPaymentApi.getStatus();
+    expect(status).toBe(200);
 
     const response = await takhfifanPaymentApi.getTakhfifanPaymentResponse();
 

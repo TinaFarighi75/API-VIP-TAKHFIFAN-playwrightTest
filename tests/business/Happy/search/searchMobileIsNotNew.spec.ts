@@ -2,7 +2,6 @@ import { test, expect } from "../../../../utils/fixtures";
 import { users } from "../../../../test-data/user-data.js";
 
 test("check mobile number is assign to vendor @smoke @vendor @vendor-merchant @regression", async ({
-  authApi,
   businessApi,
   authTokenAdmin,
 }) => {
@@ -27,7 +26,7 @@ test("check mobile number is assign to vendor @smoke @vendor @vendor-merchant @r
     userTest.mobile,
   );
 
-  const status = await authApi.getStatus();
+  const status = await businessApi.getStatus();
   expect(status).toBe(200);
 
   const response = await businessApi.getsearchBusinessSearchMobileNumberIsNotNewResponse();

@@ -2,7 +2,7 @@ import { test, expect } from "../../../../utils/fixtures";
 import { users } from "../../../../test-data/user-data.js";
 
 test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant @regression", async ({
-  authApi,
+ 
   businessApi,
   authTokenAdmin,
 }) => {
@@ -27,7 +27,7 @@ test("check bussiness name  is assign to vendor @smoke @vendor @vendor-merchant 
     undefined,
   );
 
-  const status = await authApi.getStatus();
+  const status = await businessApi.getStatus();
   expect(status).toBe(200);
 
   const response = await businessApi.getsearchBusinessNameIsNotNewVendorResponse();

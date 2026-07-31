@@ -7,22 +7,15 @@ import type {
   ValidLogInResponseViaOtp,
   ValidCheckOtp,
   ValidRegisterUser,
-  OverThanLimit,
-  InvalidResponse401,
-  InvalidResponse403,
-  InvalidResponse404,
-  InvalidResponse400,
   // InvalidResponse500,
 } from "./auth-type";
+import { BaseApi } from "../Base/base";
 
-export class Auth {
-  private request: APIRequestContext;
+export class Auth extends BaseApi {
+
   private baseUrl: string = "https://stgiran-vip.takhfifan.com/api/v1";
-  private response?: APIResponse;
 
-  constructor(request: APIRequestContext) {
-    this.request = request;
-  }
+
 
   //------------------LOGIN---------------------------
 
@@ -36,7 +29,9 @@ export class Auth {
       },
       headers: {
         "Content-Type": "application/json",
+        
       },
+      failOnStatusCode: false,
     });
 
     return this.response;
@@ -93,6 +88,7 @@ export class Auth {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+        failOnStatusCode: false,
     });
     return this.response;
   }
@@ -119,6 +115,7 @@ export class Auth {
       headers: {
         "Content-Type": "application/json",
       },
+        failOnStatusCode: false,
     });
     return this.response;
   }
@@ -147,6 +144,7 @@ export class Auth {
       headers: {
         "Content-Type": "application/json",
       },
+        failOnStatusCode: false,
     });
     return this.response;
   }
@@ -203,6 +201,7 @@ export class Auth {
       headers: {
         "Content-Type": "application/json",
       },
+        failOnStatusCode: false,
     });
     return this.response;
   }
@@ -216,74 +215,4 @@ export class Auth {
     };
   }
 
-  //------------------GENERAL-------------------------
-
-  async getOverThanLimit(): Promise<OverThanLimit> {
-    if (!this.response) {
-      throw new Error("No response found. Call the request method first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-       msg: responseJson.msg,
-    };
-  }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-  async getStatus(): Promise<number> {
-    if (!this.response) {
-      throw new Error("No response found. Call an API request method first.");
-    }
-
-    return this.response.status();
-  }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  async getInvalidResponse401(): Promise<InvalidResponse401> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-    };
-  }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  async getInvalidResponse403(): Promise<InvalidResponse403> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      error: responseJson.error,
-      message: responseJson.message,
-    };
-  }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  async getInvalidResponse404(): Promise<InvalidResponse404> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-
-    const responseJson = await this.response.json();
-
-    return {
-      message: responseJson.message,
-    };
-  }
-  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  async getInvalidResponse400(): Promise<InvalidResponse400> {
-    if (!this.response) {
-      throw new Error("No response found. Call loginRequest first.");
-    }
-    const responseJson = await this.response.json();
-
-    return {
-      msg: responseJson.msg,
-    };
-  }
 }

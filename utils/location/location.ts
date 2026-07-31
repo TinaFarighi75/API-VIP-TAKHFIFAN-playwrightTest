@@ -1,14 +1,13 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import type { LocationsResponse } from "../location/location-type";
+import { BaseApi } from "../Base/base";
 
-export class Location {
-  private request: APIRequestContext;
+export class Location extends BaseApi{
+
   private baseUrl = "https://stgiran-vip.takhfifan.com/api";
-  private response?: APIResponse;
 
-  constructor(request: APIRequestContext) {
-    this.request = request;
-  }
+
+
   //------------------PROVINCE---------------------------
 
   async locationProvinceRequest(

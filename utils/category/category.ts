@@ -1,14 +1,12 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import type { CategoryListResponse } from "../category/category-type";
+import { BaseApi } from "../Base/base";
 
-export class Category {
-  private request: APIRequestContext;
+export class Category extends BaseApi{
+
   private baseUrl: string = "https://stgiran-vip.takhfifan.com/api";
-  private response?: APIResponse;
+ 
 
-  constructor(request: APIRequestContext) {
-    this.request = request;
-  }
 
   async categoryRequest(token: string, url?: string): Promise<APIResponse> {
     const finalUrl = url || `${this.baseUrl}/categories`;
@@ -18,6 +16,7 @@ export class Category {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      failOnStatusCode:false,
     });
 
     return this.response;

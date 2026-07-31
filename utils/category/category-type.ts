@@ -12,9 +12,9 @@ export type CategoryListResponse = {
       profitability: number | null;
       is_active: boolean;
       listing_fee: number | null;
-      pos_min_commission: number;
-      pos_max_commission: number;
-      recommended_pos_commission: number;
+      pos_min_commission: number |string;
+      pos_max_commission: number|string;
+      recommended_pos_commission: number|string;
       business_line: string | null;
       description: string;
       default_cover_file: string;

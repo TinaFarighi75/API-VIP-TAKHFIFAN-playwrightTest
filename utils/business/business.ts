@@ -1,21 +1,13 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
-import type {
-  OverThanLimit,
-  InvalidResponse401,
-  InvalidResponse403,
-  InvalidResponse404,
-  InvalidResponse400,
-} from "../auth/auth-type";
 import type { ValidSearchResponseToCheckNewMobileNumberOrNot } from "../business/business-type";
+import { BaseApi } from "../Base/base";
 
-export class Business {
-  private request: APIRequestContext;
+export class Business extends BaseApi{
+
   private baseUrl: string = "https://stgiran-vip.takhfifan.com/api/v1";
-  private response?: APIResponse;
 
-  constructor(request: APIRequestContext) {
-    this.request = request;
-  }
+
+
   //------------------SEARCH MOBILE NUMBER TO VALIDATE IS NEW OR NOT---------------------------
 
   async searchBusinessSearchMobileNumberIsNewOrNotRequest(
@@ -61,6 +53,7 @@ export class Business {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+        failOnStatusCode: false,
     });
 
     return this.response;
@@ -226,6 +219,7 @@ async getsearchBusinessSearchMobileNumberIsNotNewResponse(): Promise<ValidSearch
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+        failOnStatusCode: false,
     });
 
     return this.response;

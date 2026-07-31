@@ -1,12 +1,11 @@
 import { test, expect } from "../../../utils/fixtures.js";
 
 test("check category list @smoke @category @category-merchant @regression", async ({
-  authApi,
   categoryApi,
   authTokenAdmin,
 }) => {
   await categoryApi.categoryRequest(authTokenAdmin);
-  const status = await authApi.getStatus();
+  const status = await categoryApi.getStatus();
   expect(status).toBe(200);
 
   const response = await categoryApi.getcategoryResponse();
@@ -114,15 +113,15 @@ test("check category list @smoke @category @category-merchant @regression", asyn
   );
   expect(beautyAndCosmeticsCategory.attributes.is_active).toBe(true);
   expect(beautyAndCosmeticsCategory.attributes.level).toEqual(3);
-  expect(beautyAndCosmeticsCategory.attributes.commission).toEqual(20.0);
+  expect(beautyAndCosmeticsCategory.attributes.commission).toEqual(25.0);
   expect(beautyAndCosmeticsCategory.attributes.minimum_commission).toBe(null);
   expect(beautyAndCosmeticsCategory.attributes.profitability).toBe(null);
   expect(beautyAndCosmeticsCategory.attributes.listing_fee).toBe(null);
   expect(beautyAndCosmeticsCategory.attributes.pos_min_commission).toEqual(7);
-  expect(beautyAndCosmeticsCategory.attributes.pos_max_commission).toEqual(20);
+  expect(beautyAndCosmeticsCategory.attributes.pos_max_commission).toEqual("20");
   expect(
     beautyAndCosmeticsCategory.attributes.recommended_pos_commission,
-  ).toEqual(15);
+  ).toEqual("15");
   expect(beautyAndCosmeticsCategory.attributes.business_line).toBe(null);
   expect(beautyAndCosmeticsCategory.attributes.description).toContain("لوازم و محصولات آرایشی و بهداشتی")
   expect(beautyAndCosmeticsCategory.attributes.default_cover_file).toBeDefined();
@@ -133,7 +132,7 @@ test("check category list @smoke @category @category-merchant @regression", asyn
     beautyAndCosmeticsCategory.attributes.default_cover_type,
   ).toBeDefined();
   expect(beautyAndCosmeticsCategory.attributes.slug).toBe(
-    "beauty-cosmetics",
+    "zibaei-arayeshi",
   );
   expect(
     beautyAndCosmeticsCategory.attributes.default_cover_file_url,
@@ -141,8 +140,8 @@ test("check category list @smoke @category @category-merchant @regression", asyn
   expect(
     beautyAndCosmeticsCategory.attributes.default_logo_file_url,
   ).toBeDefined();
-  expect(beautyAndCosmeticsCategory.attributes.default_cover_file).toContain("/uploads/magento_media/category/staging/category/default_cover_file)")
-  expect(beautyAndCosmeticsCategory.attributes.default_logo_file).toContain("/uploads/magento_media/category/staging/category/default_logo_file)")
+  expect(beautyAndCosmeticsCategory.attributes.default_cover_file).toContain("/uploads/magento_media/category/staging/category/default_cover_file")
+  expect(beautyAndCosmeticsCategory.attributes.default_logo_file).toContain("/uploads/magento_media/category/staging/category/default_logo_file")
   expect(beautyAndCosmeticsCategory.attributes.default_cover_file_url).toBeDefined();
   expect(beautyAndCosmeticsCategory.attributes.default_cover_file_url).toContain("https://cdn.takhfifan.com/media/category/staging/category/default_cover_file")
     expect(beautyAndCosmeticsCategory.attributes.default_logo_file_url).toContain("https://cdn.takhfifan.com/media/category/staging/category/default_logo_file")

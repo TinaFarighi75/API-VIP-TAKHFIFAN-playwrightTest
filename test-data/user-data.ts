@@ -81,4 +81,17 @@ export const users: TestUser[] = [
     vendorId: 61306,
     businessName: "تریاکیانو",
   },
+    {
+    id: 6,
+    username: "61306@gmail.com",
+    password: "123456",
+    email: "61306@gmail.com",
+    name: "فرانت فرانت زاده ",
+    role: "merchant",
+    mobile: "09372692429",
+    passwordTest: "11111",
+    businessId: 100769,
+    vendorId: 61306,
+    businessName: "تریاکیانو",
+  },
 ];

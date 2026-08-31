@@ -200,7 +200,7 @@ export class CategoryTags extends BaseApi {
   //------------------UPDATE TAG TYPE AND TAGS--------------------------
   async updateTagTypeRequest(
     token: string,
-    tag_type_id: number,
+    tag_type_id: number|any,
     name?: string,
     en_name?: string,
     category_tags_attributes?: any,

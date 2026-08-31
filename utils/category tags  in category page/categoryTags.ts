@@ -16,7 +16,7 @@ export class CategoryTags extends BaseApi {
 
   async createTagTypeRequest(
     token: string,
-    category_id: number,
+    category_id: number|any,
     name: string,
     en_name?: string,
     category_tags_attributes?: any,
@@ -55,7 +55,7 @@ export class CategoryTags extends BaseApi {
   //------------------GET  CATEGORY TAGS--------------------------
   async getCategoryRequest(
     token: string,
-    category_id: number,
+    category_id: number | any,
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =
@@ -107,7 +107,7 @@ export class CategoryTags extends BaseApi {
   //------------------GET TAGS OF CATEGORY--------------------------
   async getTagsOfCategoryRequest(
     token: string,
-    category_id: number,
+    category_id: number|any,
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =
@@ -239,7 +239,7 @@ export class CategoryTags extends BaseApi {
   //------------------DELETE TAG TYPE--------------------------
   async deleteTagTypeRequest(
     token: string,
-    tag_type_id: number,
+    tag_type_id: number|any,
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =

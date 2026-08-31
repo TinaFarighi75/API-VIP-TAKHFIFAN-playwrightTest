@@ -1,5 +1,5 @@
 import { test, expect } from "../../../utils/fixtures";
-test.describe("update category tags in category pages  @smoke @update-category-tags @regression",()=>{
+test.describe("update category tags in category pages  @smoke @update-category-tags-in-category-page @regression",()=>{
     const msgSuccessCreate="created successfully"
     const msgSucessUpdate="Updated successfully"
     const msgSucessDelete= "Deleted successfully"

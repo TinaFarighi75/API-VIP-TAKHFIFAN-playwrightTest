@@ -1,6 +1,6 @@
 import { test, expect } from "../../../utils/fixtures";
 
-test.describe("get category tags @smoke @get-category-tags @regression", async () => {
+test.describe("get category tags @smoke @get-category-tags-in-category-page @regression", async () => {
   test("get category tags with category id have category tags", async ({
     authTokenAdmin,
     categoryTagsApi,

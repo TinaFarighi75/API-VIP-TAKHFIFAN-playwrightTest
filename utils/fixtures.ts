@@ -9,7 +9,8 @@ import{Category} from "./category/category";
 import { Location } from "./location/location";
 import{TakhfifanPayment} from "./takhfifan_payment/takhfifan_payment";
 import{CategoryTags} from "./category tags  in category page/categoryTags";
-
+import{BusinessCategory} from "./vendorCategory-update/vendorCategory"
+import { request } from "node:http";
 type MyFixtures = {
   authApi: Auth;
   authTokenAdmin: string;
@@ -22,6 +23,7 @@ type MyFixtures = {
   locationApi:Location;
   takhfifanPaymentApi:TakhfifanPayment;
   categoryTagsApi:CategoryTags;
+  BusinessCategoryApi:BusinessCategory
 };
 export const test = base.extend<MyFixtures>({
   authApi: async ({ request }, use) => {
@@ -43,6 +45,10 @@ export const test = base.extend<MyFixtures>({
   categoryTagsApi: async ({ request }, use) => {
     await use(new CategoryTags(request));
   },
+  BusinessCategoryApi: async ({ request }, use) => {
+    await use(new BusinessCategory(request));
+  },
+
   authTokenAdmin: async ({ authApi }, use) => {
     const defaultUser = users[0];
     await authApi.loginRequest(defaultUser.username, defaultUser.password);

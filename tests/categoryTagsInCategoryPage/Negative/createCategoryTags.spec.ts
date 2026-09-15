@@ -31,9 +31,9 @@ test.describe("validate create category tag negative senarios in category page @
     const status = await categoryTagsApi.getStatus();
     expect(status).toBe(400); 
     const res =await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("شناسه دسته‌بندی نامعتبر است.")
+    expect(res.msg).toEqual(["شناسه دسته‌بندی نامعتبر است."])
   })
-  test.fixme("send request with token who not acess",async({authTokeMerchant,categoryTagsApi})=>{
+  test("send request with token who not acess",async({authTokeMerchant,categoryTagsApi})=>{
     await categoryTagsApi.createTagTypeRequest(authTokeMerchant,547,"tina","tina en")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(403)
@@ -46,7 +46,7 @@ test.describe("validate create category tag negative senarios in category page @
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("شناسه دسته‌بندی الزامی است.")
+    expect(res.msg).toEqual(["شناسه دسته‌بندی الزامی است."])
 
   })
   test("send request without any value for category id",async({authTokenAdmin,categoryTagsApi})=>{
@@ -54,46 +54,46 @@ test.describe("validate create category tag negative senarios in category page @
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("شناسه دسته‌بندی الزامی است.")
+    expect(res.msg).toEqual(["شناسه دسته‌بندی الزامی است."])
   })
   test("send request with non-existent category id",async({authTokenAdmin,categoryTagsApi})=>{
     await categoryTagsApi.createTagTypeRequest(authTokenAdmin,51154545422125,"tina","tina en")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("دسته‌بندی مورد نظر یافت نشد.")
+    expect(res.msg).toEqual(["دسته‌بندی مورد نظر یافت نشد."])
   })
 
-  test.fixme("send request without any name",async({authTokenAdmin,categoryTagsApi})=>{
+  test("send request without any name",async({authTokenAdmin,categoryTagsApi})=>{
     await categoryTagsApi.createTagTypeRequest(authTokenAdmin,547,undefined,"tina en")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("نام تگ‌تایپ الزامی است.")
+    expect(res.msg).toEqual(["نام تگ‌تایپ الزامی است."])
 
   })
 
-  test.fixme("send request without any value for name",async({authTokenAdmin,categoryTagsApi})=>{
+  test("send request without any value for name",async({authTokenAdmin,categoryTagsApi})=>{
       await categoryTagsApi.createTagTypeRequest(authTokenAdmin,547,"","tina en")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual("نام تگ‌تایپ الزامی است.")
+  expect(res.msg).toEqual(["نام تگ‌تایپ الزامی است."]);
   })
-  test.fixme("send request with duplicate value for name",async({authTokenAdmin,categoryTagsApi})=>{
+  test("send request with duplicate value for name",async({authTokenAdmin,categoryTagsApi})=>{
       await categoryTagsApi.createTagTypeRequest(authTokenAdmin,547,"فهد","tina en")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual(" نام تگ‌تایپ در این دسته‌بندی تکراری است.")
+    expect(res.msg).toEqual(["نام تگ‌تایپ در این دسته‌بندی تکراری است."])
 
   })
-  test.fixme("send request with duplicate value for en_name",async({authTokenAdmin,categoryTagsApi})=>{
+  test("send request with duplicate value for en_name",async({authTokenAdmin,categoryTagsApi})=>{
       await categoryTagsApi.createTagTypeRequest(authTokenAdmin,547,"tinaB","فهد")
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual( "نام انگلیسی تگ‌تایپ در این دسته‌بندی تکراری است.")
+    expect(res.msg).toEqual(["نام انگلیسی تگ‌تایپ در این دسته‌بندی تکراری است."])
 
   })
   test("send request without any name in category tags",async({authTokenAdmin,categoryTagsApi})=>{
@@ -113,9 +113,9 @@ test.describe("validate create category tag negative senarios in category page @
     const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual( [
-        "Category tags name نام تگ الزامی است."
-    ])
+  expect(res.msg).toEqual([
+    "Category tags name الزامی است.",
+  ]);
 
   })
   test("send request without any  value for name in category tags",async({authTokenAdmin,categoryTagsApi})=>{
@@ -135,9 +135,9 @@ test.describe("validate create category tag negative senarios in category page @
         const status = await categoryTagsApi.getStatus()
     expect(status).toBe(400)
     const res = await categoryTagsApi.getInvalidResponse400()
-    expect(res.msg).toEqual( [
-        "Category tags name نام تگ الزامی است."
-    ])
+   expect(res.msg).toEqual([
+    "Category tags name الزامی است.",
+  ]);
 
   })
   test("send request with dupicate name and en name in category tags",async({authTokenAdmin,categoryTagsApi})=>{

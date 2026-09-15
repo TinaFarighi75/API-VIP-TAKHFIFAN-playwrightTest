@@ -7,8 +7,8 @@ import {
   expectNotLimitedCheckOtp,
   sleep,
 } from "../../../helper/auth-limit-helper";
-
 test.describe.configure({ mode: "serial" });
+
 
 test.describe("check_otp over-than-limit validation with cooldown  @auth @negative-auth @negative @overThanLimit", () => {
   test.setTimeout(200_000);

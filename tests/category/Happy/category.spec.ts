@@ -53,9 +53,10 @@ test("check category list @smoke @category @category-merchant @regression", asyn
   expect(restaurantAndCoffeeShopCategory.attributes.v3_category_id).toEqual(
     547,
   );
-  expect(restaurantAndCoffeeShopCategory.attributes.name).toEqual(
-    "رستوران و کافی شاپ ",
-  );
+   expect(restaurantAndCoffeeShopCategory.attributes.name).toBe(
+     "رستوران و کافی شاپ",
+   );
+
   expect(restaurantAndCoffeeShopCategory.attributes.is_active).toBe(true);
   expect(restaurantAndCoffeeShopCategory.attributes.level).toEqual(3);
   expect(restaurantAndCoffeeShopCategory.attributes.commission).toEqual(20.0);

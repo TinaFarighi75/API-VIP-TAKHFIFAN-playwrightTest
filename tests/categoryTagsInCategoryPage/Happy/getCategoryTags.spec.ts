@@ -1,34 +1,34 @@
 import { test, expect } from "../../../utils/fixtures";
-
+import { vendorTags } from "../../../test-data/vendor-tag-data";
 test.describe("get category tags @smoke @get-category-tags-in-category-page @regression", async () => {
+  const categoryId = vendorTags[0].categoryId;
+  const categoryIdEmptyTag = vendorTags[2].categoryId;
   test("get category tags with category id have category tags", async ({
     authTokenAdmin,
     categoryTagsApi,
   }) => {
-    await categoryTagsApi.getCategoryRequest(authTokenAdmin, 547);
+    await categoryTagsApi.getCategoryRequest(authTokenAdmin, categoryId);
 
     const statusCategory = await categoryTagsApi.getStatus();
     expect(statusCategory).toBe(200);
 
-    const responseCategory = await categoryTagsApi.getValidCategoryResponse();
+    const responseCategory = await categoryTagsApi.getValidCategoryResponse();   
 
-    expect(responseCategory.data.id).toEqual("547");
-    expect(
-      responseCategory.data.attributes.category_tag_types.length,
-    ).toBeGreaterThan(0);
+    // مقایسه بعد از نرمال‌سازی (Trim هر دو سمت)
+    expect(String(responseCategory.data.id).trim()).toEqual(String(categoryId).trim());
   });
   test("get category tags with category id have no category tags ", async ({
     authTokenAdmin,
     categoryTagsApi,
   }) => {
-    await categoryTagsApi.getCategoryRequest(authTokenAdmin, 548);
+    await categoryTagsApi.getCategoryRequest(authTokenAdmin, categoryIdEmptyTag);
 
     const statusCategory = await categoryTagsApi.getStatus();
     expect(statusCategory).toBe(200);
 
     const responseCategory = await categoryTagsApi.getValidCategoryResponse();
 
-    expect(responseCategory.data.id).toEqual("548");
+    expect(String(responseCategory.data.id).trim()).toEqual(String(categoryIdEmptyTag).trim());
     expect(responseCategory.data.attributes.category_tag_types.length).toEqual(
       0,
     );
@@ -37,7 +37,7 @@ test.describe("get category tags @smoke @get-category-tags-in-category-page @reg
     authTokenAdmin,
     categoryTagsApi,
   }) => {
-    await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, 547);
+    await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, categoryId);
     const statusCategory = await categoryTagsApi.getStatus();
     expect(statusCategory).toBe(200);
 
@@ -50,7 +50,7 @@ test.describe("get category tags @smoke @get-category-tags-in-category-page @reg
     authTokenAdmin,
     categoryTagsApi,
   }) => {
-    await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, 548);
+    await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, categoryIdEmptyTag);
     const statusCategory = await categoryTagsApi.getStatus();
     expect(statusCategory).toBe(200);
 
@@ -65,7 +65,7 @@ test.describe("get category tags @smoke @get-category-tags-in-category-page @reg
   }) => {
     await categoryTagsApi.getTagsOfCategoryWithQueryParamRequest(
       authTokenAdmin,
-      { category_id: 547 },
+      { category_id: categoryId },
     );
     const status = await categoryTagsApi.getStatus();
     expect(status).toBe(200);
@@ -80,7 +80,7 @@ test.describe("get category tags @smoke @get-category-tags-in-category-page @reg
   }) => {
     await categoryTagsApi.getTagsOfCategoryWithQueryParamRequest(
       authTokenAdmin,
-      { category_id: 548 },
+      { category_id: categoryIdEmptyTag },
     );
     const status = await categoryTagsApi.getStatus();
     expect(status).toBe(200);

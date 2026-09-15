@@ -103,3 +103,57 @@ export async function getCategoryTags(
 
   return categoryTagsApi.getValidResponseForGetTagsOfCategoryRequest();
 }
+
+
+export const deleteTagTypeWithCleanup = async (
+  api: CategoryTags,
+  token: string,
+  tag_type_id: number,
+) => {
+  // مرحله ۱: واکشی تگ‌های فرزند
+  await api.getTagsOfCategoryWithQueryParamRequest(token, {
+    id: tag_type_id,
+  });
+
+  const getStatus = await api.getStatus();
+
+  if (getStatus === 200) {
+    const json: any = await api.getValidResponseForGetTagsOfCategoryRequest();
+
+    const tagTypeItem = json.data?.find(
+      (item: any) => String(item.id) === String(tag_type_id),
+    );
+
+    const existingTags: any[] = tagTypeItem?.attributes?.category_tags ?? [];
+
+    if (existingTags.length > 0) {
+      // مرحله ۲: حذف تگ‌ها با PUT
+      await api.updateTagTypeRequest(
+        token,
+        tag_type_id,
+        undefined,
+        undefined,
+        existingTags.map((tag: any) => ({
+          id: tag.id,
+          _destroy: true,
+        })),
+      );
+
+      const putStatus = await api.getStatus();
+      if (putStatus !== 200) {
+        throw new Error(`Cleanup PUT failed with status ${putStatus}`);
+      }
+    }
+  }
+
+  // مرحله ۳: حذف تگ‌تایپ
+  await api.deleteTagTypeRequest(token, tag_type_id);
+
+  const status = await api.getStatus();
+  if (status !== 200) {
+    throw new Error(`deleteTagTypeWithCleanup failed with status ${status}`);
+  }
+
+  return api.getValidResponseForDeleteTagTypeRequest();
+};
+

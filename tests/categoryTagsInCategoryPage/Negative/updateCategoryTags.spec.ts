@@ -21,7 +21,7 @@ test.describe("validate update service for category tags in category page @regre
     expect(res.error).toEqual("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
   });
 
-  test.fixme("send request with token who not access", async ({
+  test("send request with token who not access", async ({
     authTokeMerchant,
     categoryTagsApi,
   }) => {
@@ -64,9 +64,9 @@ test.describe("validate update service for category tags in category page @regre
       ],
     )
     const status = await categoryTagsApi.getStatus();
-    expect(status).toBe(400);
-    const res = await categoryTagsApi.getInvalidResponse400();
-    expect(res.msg).toEqual("شناسه تگ‌تایپ نامعتبر است.")
+    expect(status).toBe(404);
+    const res = await categoryTagsApi.getInvalidResponse404();
+    expect(res.message).toEqual("Couldn't find CategoryTagType with 'id'=tagtype")
 });
 
 test("send request with not existing tag type id",async({authTokenAdmin,categoryTagsApi})=>{
@@ -86,11 +86,11 @@ test("send request with not existing tag type id",async({authTokenAdmin,category
       ],
     )
     const status = await categoryTagsApi.getStatus();
-    expect(status).toBe(400);
-    const res = await categoryTagsApi.getInvalidResponse400();
-    expect(res.msg).toEqual("تگ‌تایپ مورد نظر یافت نشد.")
+    expect(status).toBe(404);
+    const res = await categoryTagsApi.getInvalidResponse404();
+    expect(res.message).toEqual("Couldn't find CategoryTagType with 'id'=1215145151")
 })
-test.fixme("send request with category tag type not exist in tag type id",async({authTokenAdmin,categoryTagsApi})=>{
+test("send request with category tag type not exist in tag type id",async({authTokenAdmin,categoryTagsApi})=>{
     await categoryTagsApi.updateTagTypeRequest(authTokenAdmin,
       15,
       "tin",
@@ -107,12 +107,12 @@ test.fixme("send request with category tag type not exist in tag type id",async(
       ],
     )
     const status = await categoryTagsApi.getStatus();
-    expect(status).toBe(404);
-    const res = await categoryTagsApi.getInvalidResponse404();
-    expect(res.message).toEqual("Couldn't find CategoryTag with ID=242666 for CategoryTagType with ID=24")
+    expect(status).toBe(400);
+    const res = await categoryTagsApi.getInvalidResponse400();
+    expect(res.msg).toEqual(["شناسه تگ برای این تگ‌تایپ یافت نشد."])
 
 })
-test.fixme("send request without any name for category tags and en name is dupicate in category",async({authTokenAdmin,categoryTagsApi})=>{
+test("send request without any name for category tags and en name is dupicate in category",async({authTokenAdmin,categoryTagsApi})=>{
     await categoryTagsApi.updateTagTypeRequest(authTokenAdmin,
       15,
       "",
@@ -131,9 +131,9 @@ test.fixme("send request without any name for category tags and en name is dupic
     expect(status).toBe(400);
     const res = await categoryTagsApi.getInvalidResponse400();
     expect(res.msg).toEqual([
-        "Category tags name نام تگ الزامی است.",
-        "نام تگ‌تایپ الزامی است.",
-        "تگ‌تایپ نام انگلیسی تگ‌تایپ در این دسته‌بندی تکراری است."
+       "Category tags name الزامی است.",
+             "نام تگ‌تایپ الزامی است.",
+          "نام انگلیسی تگ‌تایپ در این دسته‌بندی تکراری است.",
     ])
 })
 });

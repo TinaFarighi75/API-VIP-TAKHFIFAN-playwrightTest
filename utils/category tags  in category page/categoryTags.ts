@@ -221,6 +221,13 @@ export class CategoryTags extends BaseApi {
       },
       failOnStatusCode: false,
     });
+
+    if (!this.response.ok()) {
+      console.error(
+        `Update category tag type failed (${this.response.status()}): ${await this.response.text()}`,
+      );
+    }
+
     return this.response;
   }
 

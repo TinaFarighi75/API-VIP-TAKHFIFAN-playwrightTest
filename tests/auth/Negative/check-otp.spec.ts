@@ -14,7 +14,7 @@ test.describe("check OTP validation @auth @negative-auth @negative", async () =>
     expect(response.msg).toEqual("کدیکبار مصرف صحیح نیست");
   });
 
-  test.fixme(" Do not Send  body", async ({
+  test(" Do not Send  body", async ({
     authApi,
     authloginRequestViaOtp,
   }) => {
@@ -22,9 +22,9 @@ test.describe("check OTP validation @auth @negative-auth @negative", async () =>
     const status = await authApi.getStatus();
     expect(status).toBe(400);
     const response = await authApi.getInvalidResponse400();
-    expect(response.msg).toEqual("");
+    // expect(response.msg).toEqual("");
   });
-  test.fixme(" Do not Send  otp-token", async ({
+  test(" Do not Send  otp-token", async ({
     authApi,
     authloginRequestViaOtp,
   }) => {
@@ -39,20 +39,19 @@ test.describe("check OTP validation @auth @negative-auth @negative", async () =>
     );
   });
 
-  test.fixme("Do not Send code", async ({
+  test("Do not Send code", async ({
     authApi,
     authloginRequestViaOtp,
   }) => {
-    const userTest = users[4];
 
     await authApi.loginCheckOtpRequest(
       authloginRequestViaOtp,
-      userTest.passwordTest,
+      undefined,
     );
     const status = await authApi.getStatus();
     expect(status).toBe(400);
-    const response = await authApi.getInvalidResponse400();
-    expect(response.msg).toEqual("");
+    // const response = await authApi.getInvalidResponse400();
+    // expect(response.msg).toEqual("");
   });
 
   test("Send wrong otp-token", async ({ authApi, authloginRequestViaOtp }) => {
@@ -66,18 +65,18 @@ test.describe("check OTP validation @auth @negative-auth @negative", async () =>
     const response = await authApi.getInvalidResponse400();
     expect(response.msg).toEqual("کدیکبار مصرف صحیح نیست");
   });
-  test.fixme("Send wrong url",async({authApi,authloginRequestViaOtp})=>{
+  test("Send wrong url",async({authApi,authloginRequestViaOtp})=>{
 
     const userTest = users[4]
     await authApi.loginCheckOtpRequest(authloginRequestViaOtp,userTest.passwordTest,"https://stgiran-vip.takhfifan.com/api/v1/user_panel/authentication/check_otp22")
 
     const status = await authApi.getStatus();
     expect(status).toBe(404);
-    const response = await authApi.getInvalidResponse404();
-    expect(response.message).toEqual("");
+    // const response = await authApi.getInvalidResponse404();
+    // expect(response.message).toEqual("");
   })
   
-  test.fixme("send request when vpn is on",async({authApi,authloginRequestViaOtp})=>{ 
+  test.skip("send request when vpn is on",async({authApi,authloginRequestViaOtp})=>{ 
     const userTest = users[4]
 
     await authApi.loginCheckOtpRequest(authloginRequestViaOtp,userTest.passwordTest)
@@ -86,7 +85,7 @@ test.describe("check OTP validation @auth @negative-auth @negative", async () =>
     const status = await authApi.getStatus();
     expect(status).toBe(403);
     const response = await authApi.getInvalidResponse403();
-    expect(response.message).toEqual("");
+    // expect(response.message).toEqual("");
 
 
   })

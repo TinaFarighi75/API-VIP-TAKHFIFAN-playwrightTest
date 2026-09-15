@@ -29,6 +29,7 @@ export class Auth extends BaseApi {
       },
       headers: {
         "Content-Type": "application/json",
+       
         
       },
       failOnStatusCode: false,

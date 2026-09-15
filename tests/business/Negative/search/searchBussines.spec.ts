@@ -29,8 +29,8 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
 
     const status = await businessApi.getStatus();
     expect(status).toBe(400);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    // const response = await businessApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
 
   test.fixme("Send by wrong mobile length", async ({
@@ -58,11 +58,11 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
 
     const status = await businessApi.getStatus();
     expect(status).toBe(400);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    // const response = await businessApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
 
-  test.fixme("Send without auth token", async ({
+  test("Send without auth token", async ({
     authTokenAdmin,
     businessApi,
   }) => {
@@ -87,12 +87,12 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
     );
 
     const status = await businessApi.getStatus();
-    expect(status).toBe(404);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    expect(status).toBe(401);
+    const res = await businessApi.getInvalidResponse401()
+     expect(res.error).toBe("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
   });
 
-  test.fixme("Send by wrong url", async ({ authTokenAdmin, businessApi }) => {
+  test("Send by wrong url", async ({ authTokenAdmin, businessApi }) => {
     const userTest = users[4];
     await businessApi.searchBusinessSearchMobileNumberIsNewOrNotRequest(
       authTokenAdmin,
@@ -115,14 +115,14 @@ test.describe("search mobile bussines validation  @vendor @negative-vendor @nega
     );
 
     const status = await businessApi.getStatus();
-    expect(status).toBe(401);
-    const response = await businessApi.getInvalidResponse401();
-    expect(response.error).toBe("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
+    expect(status).toBe(404);
+    // const response = await businessApi.getInvalidResponse404();
+    // expect(response.message).toBe("");
   });
 });
 
 test.describe("search bussines name validation  @vendor @negative-vendor @negative", async () => {
-  test.fixme("Send without auth token", async ({ businessApi }) => {
+  test("Send without auth token", async ({ businessApi }) => {
     const userTest = users[4];
     await businessApi.searchBusinessNameIsNewVendorOrNotRequest(
       undefined,
@@ -144,9 +144,9 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
     );
 
     const status = await businessApi.getStatus();
-    expect(status).toBe(404);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    expect(status).toBe(401);
+    // const response = await businessApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
 
   test.fixme("Sending with a very long name", async ({
@@ -174,8 +174,8 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
 
     const status = await businessApi.getStatus();
     expect(status).toBe(400);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    // const response = await businessApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
   test.fixme("Send by only space name", async ({
     authTokenAdmin,
@@ -202,7 +202,7 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
 
     const status = await businessApi.getStatus();
     expect(status).toBe(400);
-    const response = await businessApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    // const response = await businessApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
 });

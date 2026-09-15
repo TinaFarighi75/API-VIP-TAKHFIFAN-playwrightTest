@@ -40,7 +40,7 @@ test.describe("validate get catgory tags in category page @regression @smoke @ne
         const res = await categoryTagsApi.getInvalidResponse401()
         expect(res.error).toEqual("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
     })
-    test.fixme("send request getTagsOfCategoryRequest with token who not access",async({authTokeMerchant,categoryTagsApi})=>{
+    test("send request getTagsOfCategoryRequest with token who not access",async({authTokeMerchant,categoryTagsApi})=>{
         await categoryTagsApi.getTagsOfCategoryRequest(authTokeMerchant, 547);
         const status = await categoryTagsApi.getStatus()
         expect(status).toBe(403);
@@ -51,17 +51,18 @@ test.describe("validate get catgory tags in category page @regression @smoke @ne
     test("send request getTagsOfCategoryRequest with not existed category id",async({authTokenAdmin,categoryTagsApi})=>{
         await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, 100000); 
         const status = await categoryTagsApi.getStatus()
-        expect(status).toBe(400)
-        const res = await categoryTagsApi.getInvalidResponse400()
-        expect(res.msg).toEqual("دسته‌بندی مورد نظر یافت نشد.")
+        expect(status).toBe(404)
+          const res = await categoryTagsApi.getInvalidResponse404()
+        expect(res.message).toBe( "Couldn't find Category with 'id'=100000")
+
 
     })
     test("send request getTagsOfCategoryRequest with wrong category id",async({authTokenAdmin,categoryTagsApi})=>{
         await categoryTagsApi.getTagsOfCategoryRequest(authTokenAdmin, "category-id"); 
         const status = await categoryTagsApi.getStatus()
-        expect(status).toBe(400)
-        const res = await categoryTagsApi.getInvalidResponse400()
-        expect(res.msg).toEqual("شناسه دسته‌بندی نامعتبر است.")
+        expect(status).toBe(404)
+        const res = await categoryTagsApi.getInvalidResponse404()
+        expect(res.message).toBe( "Couldn't find Category with 'id'=category-id")
 
 
     })
@@ -75,7 +76,7 @@ test.describe("validate get catgory tags in category page @regression @smoke @ne
         const res = await categoryTagsApi.getInvalidResponse401()
         expect(res.error).toEqual("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
     })
-    test.fixme("send request get tags of category with query params with token who not access",async({authTokeMerchant,categoryTagsApi})=>{
+    test("send request get tags of category with query params with token who not access",async({authTokeMerchant,categoryTagsApi})=>{
           await categoryTagsApi.getTagsOfCategoryWithQueryParamRequest(
       authTokeMerchant,
       { category_id: 547 },
@@ -92,9 +93,9 @@ test.describe("validate get catgory tags in category page @regression @smoke @ne
       { category_id: "category_id" },
     );
         const status = await categoryTagsApi.getStatus()
-        expect(status).toBe(400)
-        const res = await categoryTagsApi.getInvalidResponse400()
-        expect(res.msg).toEqual("شناسه دسته‌بندی نامعتبر است.")
+        expect(status).toBe(404)
+        const res = await categoryTagsApi.getInvalidResponse404()
+        expect(res.message).toEqual("Couldn't find Category with 'id'=category_id")
 
 
     })
@@ -104,9 +105,9 @@ test.describe("validate get catgory tags in category page @regression @smoke @ne
       { category_id: 100000 },
     );
         const status = await categoryTagsApi.getStatus()
-        expect(status).toBe(400)
-        const res = await categoryTagsApi.getInvalidResponse400()
-        expect(res.msg).toEqual("دسته‌بندی مورد نظر یافت نشد.")
+        expect(status).toBe(404)
+        const res = await categoryTagsApi.getInvalidResponse404()
+        expect(res.message).toEqual("Couldn't find Category with 'id'=100000")
 
     })
 

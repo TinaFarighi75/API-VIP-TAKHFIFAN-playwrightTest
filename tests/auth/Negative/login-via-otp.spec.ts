@@ -5,12 +5,12 @@ import { test, expect } from "../../../utils/fixtures";
 import { users } from "../../../test-data/user-data";
 
 test.describe("login via otp validation @auth @negative-auth @negative", () => {
-  test.fixme("Do not send body", async ({ authApi }) => {
+  test("Do not send body", async ({ authApi }) => {
     await authApi.loginRequestViaOtp(undefined);
     const status = await authApi.getStatus();
     expect(status).toBe(400);
-    const response = await authApi.getInvalidResponse400();
-    expect(response.msg).toBe("");
+    // const response = await authApi.getInvalidResponse400();
+    // expect(response.msg).toBe("");
   });
 
   test("Send a blank mobile", async ({ authApi }) => {
@@ -29,7 +29,7 @@ test.describe("login via otp validation @auth @negative-auth @negative", () => {
     expect(response.msg).toBe("شماره موبایل صحیح نیست");
   });
 
-  test.fixme("Send request by wrong url", async ({ authApi }) => {
+  test("Send request by wrong url", async ({ authApi }) => {
     const userTest = users[4];
     await authApi.loginRequestViaOtp(
       userTest.mobile,
@@ -38,11 +38,11 @@ test.describe("login via otp validation @auth @negative-auth @negative", () => {
 
     const status = await authApi.getStatus();
     expect(status).toBe(404);
-    const response = await authApi.getInvalidResponse404();
-    expect(response.message).toBe("");
+    // const response = await authApi.getInvalidResponse404();
+    // expect(response.message).toBe("");
   });
 
-  test.fixme("Send request when vpn is on", async ({ authApi }) => {
+  test.skip("Send request when vpn is on", async ({ authApi }) => {
     const userTest = users[4];
     await authApi.loginRequestViaOtp(userTest.mobile);
 

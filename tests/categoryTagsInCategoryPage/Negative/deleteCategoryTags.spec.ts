@@ -1,11 +1,11 @@
 import { test, expect } from "../../../utils/fixtures";
 import { faker } from "@faker-js/faker";
+import { deleteTagTypeWithCleanup } from "../../../helper/categoryTag-helper";
 
 test.describe("Category Tags - Negative Delete Tests @regression @negative @negative-delete-category-tags-in-category-page", () => {
   const categoryId = 547;
   const msgSuccessCreate = "created successfully";
   const msgSuccessDelete = "Deleted successfully";
-
   const nonExistingTagTypeId = 99999999;
   const expectedNotFoundMsg = "تگ‌تایپ مورد نظر یافت نشد.";
 
@@ -19,8 +19,8 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
     );
 
     const statusDelete = await categoryTagsApi.getStatus();
-    const res = await categoryTagsApi.getInvalidResponse400();
-    expect(res.msg).toEqual(expectedNotFoundMsg);
+    const res = await categoryTagsApi.getInvalidResponse404();
+    expect(res.message).toEqual("Couldn't find CategoryTagType with 'id'=99999999")
   });
 
   test("should fail when deleting an already deleted tag type (duplicate deletion)", async ({
@@ -39,7 +39,7 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
       },
     ];
 
-    // ۲. ایجاد تگ‌تایپ
+    // ۲. ایجاد تگ‌تایپ همراه با تگ فرزند
     await categoryTagsApi.createTagTypeRequest(
       authTokenAdmin,
       categoryId,
@@ -52,10 +52,12 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
     expect(statusCreate).toBe(200);
 
     const responseCreate = await categoryTagsApi.getInvalidResponse400();
+
     expect(responseCreate.msg).toEqual(msgSuccessCreate);
 
-    // ۳. استخراج آیدی تگ ساخته‌شده از صفحه کتگوری
+    // ۳. استخراج ID تگ‌تایپ ایجادشده
     await categoryTagsApi.getCategoryRequest(authTokenAdmin, categoryId);
+
     const categoryResponse = await categoryTagsApi.getValidCategoryResponse();
 
     const createdTag = categoryResponse.data.attributes.category_tag_types.find(
@@ -63,27 +65,29 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
     );
 
     expect(createdTag).toBeDefined();
+
     const tagTypeId = Number(createdTag!.id);
 
-    // ۴. بار اول: حذف تگ (باید موفقیت‌آمیز باشد)
-    await categoryTagsApi.deleteTagTypeRequest(authTokenAdmin, tagTypeId);
+    // ۴. حذف اول:
+    // ابتدا تگ‌های فرزند با PUT حذف می‌شوند؛ سپس خود تگ‌تایپ حذف می‌شود.
+    const responseFirstDelete = await deleteTagTypeWithCleanup(
+      categoryTagsApi,
+      authTokenAdmin,
+      tagTypeId,
+    );
 
-    const statusFirstDelete = await categoryTagsApi.getStatus();
-    expect(statusFirstDelete).toBe(200);
-    const res = await categoryTagsApi.getValidResponseForDeleteTagTypeRequest();
-    expect(res.msg).toEqual(msgSuccessDelete);
-
-    const responseFirstDelete =
-      await categoryTagsApi.getValidResponseForDeleteTagTypeRequest();
     expect(responseFirstDelete.msg).toEqual(msgSuccessDelete);
 
-    // ۵. بار دوم: تلاش مجدد برای حذف همان تگ (باید با خطا مواجه شود)
+    // نیازی به getStatus نیست؛ helper خودش status === 200 را بررسی می‌کند.
+
+    // ۵. حذف دوم:
+    // حذف مستقیم انجام می‌شود تا حذف تکراری بررسی شود.
     await categoryTagsApi.deleteTagTypeRequest(authTokenAdmin, tagTypeId);
 
     const statusSecondDelete = await categoryTagsApi.getStatus();
-    expect(statusSecondDelete).toBe(400);
-    const ress = await categoryTagsApi.getInvalidResponse400();
-    expect(ress.msg).toEqual(expectedNotFoundMsg);
+    expect(statusSecondDelete).toBe(404);
+    const res = await categoryTagsApi.getInvalidResponse404()
+    expect(res.message).toEqual(`Couldn't find CategoryTagType with 'id'=${tagTypeId}`)
 
     console.log(
       `✅ Successfully verified that tagTypeId ${tagTypeId} cannot be deleted twice. Second delete status:`,
@@ -97,8 +101,11 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
   }) => {
     await categoryTagsApi.deleteTagTypeRequest(authTokenAdmin, "tag-type-id");
     const status = await categoryTagsApi.getStatus();
-    const res = await categoryTagsApi.getInvalidResponse400();
-    expect(res.msg).toEqual("شناسه تگ‌تایپ نامعتبر است.");
+    expect(status).toBe(404)
+    const res = await categoryTagsApi.getInvalidResponse404()
+    expect(res.message).toEqual("Couldn't find CategoryTagType with 'id'=tag-type-id")
+
+
   });
   test("send delete category tags without token", async ({
     authTokenAdmin,
@@ -110,14 +117,14 @@ test.describe("Category Tags - Negative Delete Tests @regression @negative @nega
     expect(res.error).toEqual("پیش از ادامه باید وارد شوید یا ثبت نام کنید.");
   });
 
-  test.fixme("send delete category tags with token who not access", async ({
+  test("send delete category tags with token who not access", async ({
     authTokeMerchant,
     categoryTagsApi,
   }) => {
-    await categoryTagsApi.deleteTagTypeRequest(undefined, 21);
+    await categoryTagsApi.deleteTagTypeRequest(authTokeMerchant,21);
     const status = await categoryTagsApi.getStatus();
-    const res = await categoryTagsApi.getInvalidResponse403()
-    expect(res.error).toEqual(true)
-    expect(res.message).toEqual("Forbidden")
+    const res = await categoryTagsApi.getInvalidResponse403();
+    expect(res.error).toEqual(true);
+    expect(res.message).toEqual("Forbidden");
   });
 });

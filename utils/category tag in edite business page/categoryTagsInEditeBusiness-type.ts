@@ -251,3 +251,8 @@ export type ValidCategoryTagResponseEditeBusiness = {
 export type ValidResponseReplaceTagEditeBusiness = {
   msg: string;
 };
+//------------------VALID RESPONSE UPDATE CATEGORY---------------------------
+
+export type ValidResponseUpdateCategoryOfVendorEditeBusiness = {
+  msg: string;
+};  

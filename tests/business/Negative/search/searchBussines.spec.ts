@@ -149,7 +149,7 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
     // expect(response.msg).toBe("");
   });
 
-  test.fixme("Sending with a very long name", async ({
+  test.fixme("Send by only space name", async ({
     authTokenAdmin,
     businessApi,
   }) => {
@@ -177,7 +177,7 @@ test.describe("search bussines name validation  @vendor @negative-vendor @negati
     // const response = await businessApi.getInvalidResponse400();
     // expect(response.msg).toBe("");
   });
-  test.fixme("Send by only space name", async ({
+  test.fixme("Sending with a very long name", async ({
     authTokenAdmin,
     businessApi,
   }) => {

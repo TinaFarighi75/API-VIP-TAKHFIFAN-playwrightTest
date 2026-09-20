@@ -17,7 +17,7 @@ export class CategoryTagsInEditeBusiness extends BaseApi {
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =
-      url || `${this.baseUrl}/v1/user_panel/vendors/${BUSINESS_ID}`;
+      url || `${this.baseUrl}/v1/user_panel/business/${BUSINESS_ID}`;
 
     this.response = await this.request.get(finalUrl, {
       headers: {
@@ -44,15 +44,15 @@ export class CategoryTagsInEditeBusiness extends BaseApi {
   async replaceCategoryTagOfVendorRequest(
     token: string,
     BUSINESS_ID: number | any,
-    category_tag_id: number | any,
+    category_tag_ids: number | any,
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =
-      url || `${this.baseUrl}/v1/user_panel/vendors/${BUSINESS_ID}/category_tag`;
+      url || `${this.baseUrl}/v1/user_panel/business/${BUSINESS_ID}/category_tag`;
 
     this.response = await this.request.put(finalUrl, {
       data: {
-        category_tag_id,
+        category_tag_ids,
       },
       headers: {
         "Content-Type": "application/json",
@@ -78,15 +78,15 @@ export class CategoryTagsInEditeBusiness extends BaseApi {
   async updateCategoryOfVendorRequest(
     token: string,
     BUSINESS_ID: number | any,
-    category_id: number | any,
+    category: string | any,
     url?: string,
   ): Promise<APIResponse> {
     const finalUrl =
-      url || `${this.baseUrl}/v1/user_panel/vendors/${BUSINESS_ID}/category`;
+      url || `${this.baseUrl}/v1/user_panel/business/${BUSINESS_ID}`;
 
     this.response = await this.request.put(finalUrl, {
       data: {
-        category_id,
+        category,
       },
       headers: {
         "Content-Type": "application/json",

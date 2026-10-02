@@ -20,7 +20,7 @@ test.describe("validate get tags of category in edite business page @regression 
         console.log(`✅ Successfully verified that categoryId ${HaveTagCategoryId} has tags. Number of tag types:`, categoryTagTypes.length);    
     });
     test("send request with valid token and category-id have not tags", async ({ authTokenAdmin, CategoryTagsInEditeBusinessApi }) => {
-        const NoTagCategoryId = vendorTags[5].categoryId;
+        const NoTagCategoryId = vendorTags[4].categoryId;
         
         await CategoryTagsInEditeBusinessApi.getCategoryTagsRequest(authTokenAdmin, NoTagCategoryId);
         

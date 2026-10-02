@@ -386,8 +386,8 @@ test("can not delete tag when tag assign in vendor", async ({
   authTokenAdmin,
   categoryTagsApi,
 }) => {
-  const tagTypeIdStage = 266;
-  const tagsPayload = [{ id: 486, _destroy: true }];
+  const tagTypeIdStage = 479;
+  const tagsPayload = [{ id: 873, _destroy: true }];
 
   // ارسال پارامترها طبق امضای صحیح متد
   await categoryTagsApi.updateTagTypeRequest(

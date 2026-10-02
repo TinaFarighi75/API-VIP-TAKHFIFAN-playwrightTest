@@ -9,7 +9,7 @@ test.describe(
 
     const HaveTagCategoryId = vendorTags[0].categoryId;
     const businessId = vendorTags[0].businessId;
-    const newCategory = vendorTags[5].categoryId;
+    const newCategory = vendorTags[4].categoryId;
     const orgCategory = vendorTags[0].categoryId;
 
     test("add tag to business", async ({ authTokenAdmin, CategoryTagsInEditeBusinessApi }) => {
@@ -18,10 +18,16 @@ test.describe(
       const listOfCategoryTagTypes =
         await CategoryTagsInEditeBusinessApi.getValidResponseForGetCategoryTagsRequest();
 
-      const firstTagId =
-        listOfCategoryTagTypes.data.attributes.category_tag_types[0].category_tags[0].id;
-      const secondTagId =
-        listOfCategoryTagTypes.data.attributes.category_tag_types[0].category_tags[1].id;
+      const tagTypes = listOfCategoryTagTypes?.data?.attributes?.category_tag_types ?? [];
+      const allTags = tagTypes.flatMap((tagType) => tagType?.category_tags ?? []);
+
+      expect(
+        allTags.length,
+        `دسته‌بندی با شناسه ${HaveTagCategoryId} باید حداقل دارای ۲ تگ باشد اما ${allTags.length} تگ یافت شد.`
+      ).toBeGreaterThanOrEqual(2);
+
+      const firstTagId = allTags[0].id;
+      const secondTagId = allTags[1].id;
 
       expect(firstTagId).toBeDefined();
       expect(secondTagId).toBeDefined();
@@ -59,7 +65,7 @@ test.describe(
       expect(listOfCategoryTagTypesOfVendor).toBeDefined();
       expect(listOfCategoryTagTypesOfVendor.length).toBeGreaterThanOrEqual(2);
 
-      const assignedTagIds = listOfCategoryTagTypesOfVendor.map((tag: { id: number }) => tag.id);
+      const assignedTagIds = listOfCategoryTagTypesOfVendor.map((tag) => tag.id);
       expect(assignedTagIds).toContain(firstTagId);
       expect(assignedTagIds).toContain(secondTagId);
 
@@ -113,10 +119,16 @@ test.describe(
       const listOfCategoryTagTypes =
         await CategoryTagsInEditeBusinessApi.getValidResponseForGetCategoryTagsRequest();
 
-      const firstTagId =
-        listOfCategoryTagTypes.data.attributes.category_tag_types[0].category_tags[0].id;
-      const secondTagId =
-        listOfCategoryTagTypes.data.attributes.category_tag_types[0].category_tags[1].id;
+      const tagTypes = listOfCategoryTagTypes?.data?.attributes?.category_tag_types ?? [];
+      const allTags = tagTypes.flatMap((tagType) => tagType?.category_tags ?? []);
+
+      expect(
+        allTags.length,
+        `دسته‌بندی با شناسه ${HaveTagCategoryId} باید حداقل دارای ۲ تگ باشد اما ${allTags.length} تگ یافت شد.`
+      ).toBeGreaterThanOrEqual(2);
+
+      const firstTagId = allTags[0].id;
+      const secondTagId = allTags[1].id;
 
       expect(firstTagId).toBeDefined();
       expect(secondTagId).toBeDefined();
@@ -155,7 +167,7 @@ test.describe(
         expect(listOfCategoryTagTypesOfVendor).toBeDefined();
         expect(listOfCategoryTagTypesOfVendor.length).toBeGreaterThanOrEqual(2);
 
-        const assignedTagIds = listOfCategoryTagTypesOfVendor.map((tag: { id: number }) => tag.id);
+        const assignedTagIds = listOfCategoryTagTypesOfVendor.map((tag) => tag.id);
         expect(assignedTagIds).toContain(firstTagId);
         expect(assignedTagIds).toContain(secondTagId);
 

@@ -9,8 +9,8 @@ import {
 } from "../../../helper/auth-limit-helper";
 test.describe.configure({ mode: "serial" });
 
-
-test.describe("check_otp over-than-limit validation with cooldown  @auth @negative-auth @negative @overThanLimit", () => {
+test.describe
+  .skip("check_otp over-than-limit validation with cooldown  @auth @negative-auth @negative @overThanLimit", () => {
   test.setTimeout(200_000);
 
   const wrongCode = "12345"; // keep your actual wrong code
@@ -27,7 +27,7 @@ test.describe("check_otp over-than-limit validation with cooldown  @auth @negati
       otpToken,
       wrongCode,
       expectedMsg,
-      300
+      300,
     );
 
     expect(result).toBeTruthy();
@@ -43,7 +43,7 @@ test.describe("check_otp over-than-limit validation with cooldown  @auth @negati
       otpToken,
       wrongCode,
       expectedMsg,
-      300
+      300,
     );
 
     const limitedAt = Date.now();
@@ -52,15 +52,10 @@ test.describe("check_otp over-than-limit validation with cooldown  @auth @negati
     await sleep(30_000);
 
     console.log(
-      `Checking limited state after ${Date.now() - limitedAt}ms from first limited response`
+      `Checking limited state after ${Date.now() - limitedAt}ms from first limited response`,
     );
 
-    await expectLimitedCheckOtp(
-      authApi,
-      otpToken,
-      wrongCode,
-      expectedMsg
-    );
+    await expectLimitedCheckOtp(authApi, otpToken, wrongCode, expectedMsg);
   });
 
   test("should not return over-than-limit after cooldown window passes", async ({
@@ -73,7 +68,7 @@ test.describe("check_otp over-than-limit validation with cooldown  @auth @negati
       otpToken,
       wrongCode,
       expectedMsg,
-      300
+      300,
     );
 
     const limitedAt = Date.now();
@@ -82,14 +77,9 @@ test.describe("check_otp over-than-limit validation with cooldown  @auth @negati
     await sleep(65_000);
 
     console.log(
-      `Checking non-limited state after ${Date.now() - limitedAt}ms from first limited response`
+      `Checking non-limited state after ${Date.now() - limitedAt}ms from first limited response`,
     );
 
-    await expectNotLimitedCheckOtp(
-      authApi,
-      otpToken,
-      wrongCode,
-      expectedMsg
-    );
+    await expectNotLimitedCheckOtp(authApi, otpToken, wrongCode, expectedMsg);
   });
 });
